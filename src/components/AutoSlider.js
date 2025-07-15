@@ -3,27 +3,27 @@ import { ChevronLeft, ChevronRight } from 'lucide-react'; // nếu chưa cài: n
 
 const slides = [
   {
-    background: 'https://picsum.photos/seed/hnvbg1/1600/600',
+    background: 'https://res.cloudinary.com/dhhljyybq/image/upload/v1752594682/MI%E1%BB%80N_B%E1%BA%AEC_zfosjy.png',
     overlays: [
-      'https://picsum.photos/seed/hnv1/300/300',
-      'https://picsum.photos/seed/hnv2/300/300',
-      'https://picsum.photos/seed/hnv3/300/300',
+      'https://res.cloudinary.com/dhhljyybq/image/upload/v1752594701/1_grkt7p.png',
+      'https://res.cloudinary.com/dhhljyybq/image/upload/v1752594703/2_qnjmvv.png',
+      'https://res.cloudinary.com/dhhljyybq/image/upload/v1752594702/3_se4uqs.png',
     ],
   },
   {
-    background: 'https://picsum.photos/seed/hnvbg2/1600/600',
+    background: 'https://res.cloudinary.com/dhhljyybq/image/upload/v1752594198/hon_viet_mien_trung.png',
     overlays: [
-      'https://picsum.photos/seed/hnv4/300/300',
-      'https://picsum.photos/seed/hnv5/300/300',
-      'https://picsum.photos/seed/hnv6/300/300',
+      'https://res.cloudinary.com/dhhljyybq/image/upload/v1752594735/1_z42vo5.png',
+      'https://res.cloudinary.com/dhhljyybq/image/upload/v1752594735/2_z18bga.png',
+      'https://res.cloudinary.com/dhhljyybq/image/upload/v1752594736/3_rnxob7.png',
     ],
   },
   {
-    background: 'https://picsum.photos/seed/hnvbg3/1600/600',
+    background: 'https://res.cloudinary.com/dhhljyybq/image/upload/v1752594687/MI%E1%BB%80N_NAM_cgc9dw.png',
     overlays: [
-      'https://picsum.photos/seed/hnv7/300/300',
-      'https://picsum.photos/seed/hnv8/300/300',
-      'https://picsum.photos/seed/hnv9/300/300',
+      'https://res.cloudinary.com/dhhljyybq/image/upload/v1752594720/1_kvclhd.png',
+      'https://res.cloudinary.com/dhhljyybq/image/upload/v1752594720/2_uazoah.png',
+      'https://res.cloudinary.com/dhhljyybq/image/upload/v1752594723/3_hafyyv.png',
     ],
   },
 ];
@@ -62,7 +62,7 @@ export default function AutoBackgroundSlider() {
             className="min-w-full relative flex-shrink-0 bg-cover bg-center"
             style={{ backgroundImage: `url(${s.background})` }}
           >
-            <div className="absolute inset-0 bg-black/20" />
+            <div className="absolute inset-0 bg-black/40" />
 
             <div className="absolute inset-0 z-10 flex items-center justify-center gap-6">
               {s.overlays.map((src, j) => (
