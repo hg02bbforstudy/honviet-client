@@ -35,7 +35,7 @@ export default function Footer() {
         {/* Logo + giới thiệu */}
         <div>
           <div className="w-16 h-16 bg-honvietRed rounded flex items-center justify-center text-white text-2xl font-bold mb-3">
-            H V
+            <img src="https://res.cloudinary.com/dhhljyybq/image/upload/v1752597473/Avatar_2_h5gtk9.png" alt="Hồn Việt Logo" className="w-full h-full object-cover" />  
           </div>
           <p className="text-gray-700">
             Hồn Việt – chạm vào bản sắc, giữ lấy tinh hoa
@@ -50,9 +50,9 @@ export default function Footer() {
         {/* Thông tin liên hệ */}
         <div>
           <div className="font-bold mb-2">THÔNG TIN LIÊN HỆ</div>
-          <p>Địa chỉ: đại học FPT, Khu Công Nghệ Cao Hòa Lạc, km 29, Đại lộ, Thăng Long, Hà Nội</p>
-          <p className="mt-2">Điện thoại: <span className="text-honvietRed font-bold">0969914344</span></p>
-          <p>Email: <a href="mailto:info@honviet.vn" className="text-honvietRed font-bold">info@honviet.vn</a></p>
+          <p>Địa chỉ: 04 Liễu Giai - Cống Vị - Ba Đình - Hà Nộii</p>
+          <p className="mt-2">Điện thoại: <span className="text-honvietRed font-bold">038 282 9000</span></p>
+          <p>Email: <a href="mailto:Honviet36@gmail.com" className="text-honvietRed font-bold">Honviet36@gmail.com</a></p>
         </div>
 
         {/* Chính sách */}

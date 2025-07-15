@@ -62,7 +62,7 @@ export default function BlogBanner() {
   const banner = banners[index];
 
   return (
-    <div className="relative mx-auto max-w-[1280px] px-0 select-none my-16">
+    <div className="relative mx-auto max-w-[1580px] px-0 select-none my-16">
       <h2 className="text-2xl font-bold text-center mb-6">BLOG</h2>
       <div className="h-[400px] flex items-center justify-center relative bg-black/20">
         {/* --- Render nội dung chính --- */}

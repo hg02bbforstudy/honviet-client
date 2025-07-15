@@ -50,7 +50,7 @@ export default function AutoBackgroundSlider() {
   }, [index]);
 
   return (
-    <div className="relative w-full h-[700px] overflow-hidden">
+    <div className="relative w-full h-[700px] overflow-hidden mt-1">
       {/* wrapper flex */}
       <div
         className="flex transition-transform duration-700 ease-in-out h-full"
@@ -62,7 +62,7 @@ export default function AutoBackgroundSlider() {
             className="min-w-full relative flex-shrink-0 bg-cover bg-center"
             style={{ backgroundImage: `url(${s.background})` }}
           >
-            <div className="absolute inset-0 bg-black/40" />
+            {/* <div className="absolute inset-0 bg-black/40" />
 
             <div className="absolute inset-0 z-10 flex items-center justify-center gap-6">
               {s.overlays.map((src, j) => (
@@ -77,7 +77,7 @@ export default function AutoBackgroundSlider() {
                   />
                 </div>
               ))}
-            </div>
+            </div> */}
             
           </div>
         ))}

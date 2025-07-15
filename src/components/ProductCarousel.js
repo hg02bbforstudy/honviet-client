@@ -86,7 +86,7 @@ const products = [{
 ];
 
 const formatPrice = (p) => p.toLocaleString('vi-VN') + '₫';
-const getVisible = (w) => (w >= 1280 ? 5 : w >= 1024 ? 4 : 3);
+const getVisible = (w) => (w >= 1280 ? 5 : w >= 1024 ? 4 : w >= 768 ? 3 : 2);
 
 export default function ProductCarousel() {
   const wrapRef = useRef(null);
@@ -103,7 +103,7 @@ export default function ProductCarousel() {
       const width = wrapRef.current?.offsetWidth || 0;
       const v = getVisible(width);
       setVisible(v);
-      setItemW((width - GAP * (v - 1)) / v); // 👈 trừ khoảng GAP
+      setItemW((width - GAP * (v - 1)) / v); // chia đều cho đúng số visible
       setIndex((i) => Math.min(i, products.length - v));
     };
     handleResize();
@@ -156,7 +156,7 @@ export default function ProductCarousel() {
 
   /* ── JSX ───────────────────────────────────────── */
   return (
-    <div ref={wrapRef} className="relative mx-auto max-w-[1280px] px-0 select-none">
+    <div ref={wrapRef} className="relative mx-auto max-w-[1580px] px-0 select-none">
       <h2 className="text-2xl font-bold text-center mt-12 mb-4">BOARD GAME</h2>
 
       {/* Nút trái */}
@@ -194,7 +194,7 @@ export default function ProductCarousel() {
                 src={p.image}
                 alt={p.name}
                 draggable={false}          /* ngăn ghost khi kéo */
-                className="rounded-t-xl w-full h-[220px] object-cover select-none"
+                className="rounded-t-xl w-full h-[260px] object-cover select-none" // tăng chiều cao ảnh
               />
               <div className="p-3 text-sm">
                 <div className="font-bold text-honvietRed uppercase text-xs">{p.brand}</div>
