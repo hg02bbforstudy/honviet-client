@@ -35,14 +35,13 @@ export default function Footer() {
         {/* Logo + giới thiệu */}
         <div>
           <div className="w-16 h-16 bg-honvietRed rounded flex items-center justify-center text-white text-2xl font-bold mb-3">
-            HV
+            H V
           </div>
           <p className="text-gray-700">
-            Hồn Việt – rất nhiều trò chơi phong phú, nâng tầm giải trí và gắn kết mọi người với niềm vui bất tận
+            Hồn Việt – chạm vào bản sắc, giữ lấy tinh hoa
           </p>
           <div className="flex mt-4 gap-3 text-white">
             <a href="#" className="bg-honvietRed w-8 h-8 flex items-center justify-center rounded hover:bg-honvietGold"><FaFacebookF /></a>
-            <a href="#" className="bg-honvietRed w-8 h-8 flex items-center justify-center rounded hover:bg-honvietGold"><FaYoutube /></a>
             <a href="#" className="bg-honvietRed w-8 h-8 flex items-center justify-center rounded hover:bg-honvietGold"><FaInstagram /></a>
             <a href="#" className="bg-honvietRed w-8 h-8 flex items-center justify-center rounded hover:bg-honvietGold"><FaTiktok /></a>
           </div>

@@ -34,7 +34,7 @@ export default function FeedbackSurvey() {
             >
                 <h3 className="font-bold text-lg mb-2 text-center">TRẢI NGHIỆM CỦA BẠN</h3>
                 <p className="text-sm text-gray-700 text-center mb-3">
-                    Khả năng bạn sẽ giới thiệu trang <span className="font-semibold">adidas.com.vn</span> cho bạn bè ở mức độ nào?
+                    Khả năng bạn sẽ giới thiệu trang <span className="font-semibold">honviet.onrender.com</span> cho bạn bè ở mức độ nào?
                 </p>
 
                 {/* Chọn điểm */}
