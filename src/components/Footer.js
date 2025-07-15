@@ -50,9 +50,9 @@ export default function Footer() {
         {/* Thông tin liên hệ */}
         <div>
           <div className="font-bold mb-2">THÔNG TIN LIÊN HỆ</div>
-          <p>Địa chỉ: 04 Liễu Giai - Cống Vị - Ba Đình - Hà Nội</p>
-          <p className="mt-2">Điện thoại: <span className="text-honvietRed font-bold">038 282 9000</span></p>
-          <p>Email: <a href="mailto:Honviet36@gmail.com" className="text-honvietRed font-bold">Honviet36@gmail.com</a></p>
+          <p>Địa chỉ: <span className="font-bold">04 Liễu Giai - Cống Vị - Ba Đình - Hà Nội</span></p>
+          <p className="mt-2">Điện thoại: <span className="font-bold">038 282 9000</span></p>
+          <p>Email: <a href="mailto:Honviet36@gmail.com" className="font-bold">Honviet36@gmail.com</a></p>
         </div>
 
         {/* Chính sách */}
