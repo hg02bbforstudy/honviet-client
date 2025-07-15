@@ -80,11 +80,11 @@ export default function Footer() {
 
       {/* Hàng 3 - thông tin cuối */}
       <div className="text-center text-xs text-gray-600 px-4 pb-6">
-        <p className="mb-1">
-          CÔNG TY TNHH EVERJOY PUBLISHING Trụ sở tại: đại học FPT, Khu Công Nghệ Cao Hòa Lạc, km 29, Đại lộ, Thăng Long, Hà Nộii
+        <p className="mb-1 text-white">
+          Web được phát triển bởi <span className="font-bold">hg02buybuy</span>
         </p>
-        <p>
-          Giấy chứng nhận đăng ký kinh doanh số 0107001119 Do Sở Kế hoạch và đầu tư TP Hà Nội cấp ngày 21/09/2015, sửa đổi lần thứ 7 ngày 16/02/2023
+        <p className="mb-1 text-white">
+          Liên hệ làm web giá rẻ: <a href="mailto:giangnh.work237@gmail.com" className="font-bold">giangnh.work237@gmail.com</a>
         </p>
       </div>
     </footer>
