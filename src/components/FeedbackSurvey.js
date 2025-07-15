@@ -21,7 +21,7 @@ export default function FeedbackSurvey() {
             {!visible && (
                 <button
                     onClick={() => setVisible(true)}
-                    className="bg-honvietGold text-black font-semibold px-6 py-4 text-lg rounded-l shadow-lg hover:bg-honvietGold/80 transition-all origin-right -rotate-90 fixed right-4 top-1/2 -translate-y-1/2 z-50"
+                    className="bg-honvietGold text-black font-semibold px-6 py-4 text-lg rounded-l shadow-lg hover:bg-honvietGold/80 transition-all origin-right -rotate-90 fixed right-6 top-1/2 -translate-y-1/2 z-50"
                 >
                     Feedback
                 </button>
