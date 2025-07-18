@@ -1,17 +1,23 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { registerUser } from '../api';
 
 export default function RegisterPage() {
   const navigate = useNavigate();
   const [form, setForm] = useState({ name: '', email: '', password: '' });
+  const [error, setError] = useState('');
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleRegister = () => {
-    // Gửi dữ liệu đăng ký ở đây
-    console.log('Đăng ký:', form);
+  const handleRegister = async () => {
+    const res = await registerUser(form);
+    if (res.message === 'Đăng ký thành công') {
+      navigate('/login');
+    } else {
+      setError(res.message || 'Đăng ký thất bại');
+    }
   };
 
   return (
@@ -43,7 +49,7 @@ export default function RegisterPage() {
           value={form.password}
           onChange={handleChange}
         />
-
+        {error && <p className="text-red-500 mb-3">{error}</p>}
         <button
           onClick={handleRegister}
           className="bg-honvietRed text-white w-full py-2 rounded hover:opacity-90 mb-3"

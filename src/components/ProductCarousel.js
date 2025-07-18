@@ -1,88 +1,59 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { addToCart } from '../utils/cartUtils';
 
 const GAP = 16; // px, vì gap-4 = 1rem = 16px
 
-const products = [{
-  id: 1,
-  image: 'https://picsum.photos/seed/prod1/200/200',
-  brand: 'ZYGOMATIC',
-  name: 'The Werewolves of Millers Hollow Characters',
-  price: 455000,
-  oldPrice: 479000,
-},
-{
-  id: 2,
-  image: 'https://picsum.photos/seed/prod2/200/200',
-  brand: 'STRONGHOLD GAMES',
-  name: 'Terraforming Mars: Small Box Retail',
-  price: 3466000,
-  oldPrice: 3649000,
-},
-{
-  id: 3,
-  image: 'https://picsum.photos/seed/prod3/200/200',
-  brand: 'LEDER GAMES',
-  name: 'Root Core game',
-  price: 2108000,
-  oldPrice: 2219000,
-},
-{
-  id: 4,
-  image: 'https://picsum.photos/seed/prod4/200/200',
-  brand: 'INDIE BOARDS & CARDS',
-  name: 'The Resistance: Hidden Agenda',
-  price: 426000,
-  oldPrice: 449000,
-},
-{
-  id: 5,
-  image: 'https://picsum.photos/seed/prod5/200/200',
-  brand: 'INDIE BOARDS & CARDS',
-  name: 'Coup: Rebellion G54 – Anarchy',
-  price: 426000,
-  oldPrice: 449000,
-},
-{
-  id: 6,
-  image: 'https://picsum.photos/seed/prod6/200/200',
-  brand: 'LEDER GAMES',
-  name: 'Another Product Name',
-  price: 1234000,
-  oldPrice: 1350000,
-},
-{
-  id: 7,
-  image: 'https://picsum.photos/seed/prod7/200/200',
-  brand: 'LEDER GAMES',
-  name: 'Root: The Riverfolk Expansion',
-  price: 1234000,
-  oldPrice: 1350000,
-},
-{
-  id: 8,
-  image: 'https://picsum.photos/seed/prod8/200/200',
-  brand: 'LEDER GAMES',
-  name: 'Root: The Underworld Expansion',
-  price: 1234000,
-  oldPrice: 1350000,
-},
-{
-  id: 9,
-  image: 'https://picsum.photos/seed/prod9/200/200',
-  brand: 'LEDER GAMES',
-  name: 'Root: The Marauder Expansion',
-  price: 1234000,
-  oldPrice: 1350000,
-},
-{
-  id: 10,
-  image: 'https://picsum.photos/seed/prod10/200/200',
-  brand: 'LEDER GAMES',
-  name: 'Root: The Clockwork Expansion',
-  price: 1234000,
-  oldPrice: 1350000,
-},
+const products = [
+  {
+    id: 1,
+    image: 'https://picsum.photos/seed/combo3bo/200/200',
+    brand: 'Hồn Việt',
+    name: 'Combo 3 bộ board games',
+    price: 449000,
+  },
+  {
+    id: 2,
+    image: 'https://picsum.photos/seed/combo2bac-trung/200/200',
+    brand: 'Hồn Việt',
+    name: 'Combo 2 bộ miền Bắc-Trung',
+    price: 299000,
+  },
+  {
+    id: 3,
+    image: 'https://picsum.photos/seed/combo2bac-nam/200/200',
+    brand: 'Hồn Việt',
+    name: 'Combo 2 bộ miền Bắc-Nam',
+    price: 299000,
+  },
+  {
+    id: 4,
+    image: 'https://picsum.photos/seed/combo2trung-nam/200/200',
+    brand: 'Hồn Việt',
+    name: 'Combo 2 bộ miền Trung-Nam',
+    price: 299000,
+  },
+  {
+    id: 5,
+    image: 'https://picsum.photos/seed/bac/200/200',
+    brand: 'Hồn Việt',
+    name: 'Bộ board game miền Bắc',
+    price: 169000,
+  },
+  {
+    id: 6,
+    image: 'https://picsum.photos/seed/trung/200/200',
+    brand: 'Hồn Việt',
+    name: 'Bộ board game miền Trung',
+    price: 169000,
+  },
+  {
+    id: 7,
+    image: 'https://picsum.photos/seed/nam/200/200',
+    brand: 'Hồn Việt',
+    name: 'Bộ board game miền Nam',
+    price: 169000,
+  },
 ];
 
 const formatPrice = (p) => p.toLocaleString('vi-VN') + '₫';
@@ -185,7 +156,7 @@ export default function ProductCarousel() {
               style={{ width: itemW }}
               onPointerUp={(e) => {
                 if (!drag.current.moved) {
-                  console.log('CLICKED PRODUCT', p.id); // ← Thay bằng open modal/navigate sau này
+                  addToCart(p);
                 }
               }}
             >

@@ -1,8 +1,13 @@
-// src/components/AccessoriesSection.js
 import React, { useEffect, useRef, useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { addToCart } from '../utils/cartUtils';
 
-const accessories = [
+
+const GAP = 16;
+const formatPrice = (price) => price.toLocaleString('vi-VN') + '₫';
+const getVisible = (w) => (w >= 1280 ? 5 : w >= 768 ? 3 : 2);
+
+const localAccessories = [
   {
     id: 101,
     image: 'https://picsum.photos/seed/acc1/300/300',
@@ -23,16 +28,14 @@ const accessories = [
   },
 ];
 
-const formatPrice = (price) => price.toLocaleString('vi-VN') + '₫';
-const getVisible = (w) => (w >= 1280 ? 5 : w >= 768 ? 3 : 2);
-const GAP = 16;
-
 export default function AccessoriesSection() {
   const wrapRef = useRef(null);
   const trackRef = useRef(null);
   const [visible, setVisible] = useState(5);
   const [itemW, setItemW] = useState(0);
   const [index, setIndex] = useState(0);
+
+  const accessories = localAccessories;
 
   useEffect(() => {
     const handleResize = () => {
@@ -45,7 +48,7 @@ export default function AccessoriesSection() {
     handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  }, [accessories]);
 
   useEffect(() => {
     trackRef.current?.scrollTo({
@@ -76,15 +79,13 @@ export default function AccessoriesSection() {
       >
         <div
           className={`flex`}
-          style={{
-            gap: GAP,
-            justifyContent: showControls ? 'start' : 'center',
-          }}
+          style={{ gap: GAP, justifyContent: showControls ? 'start' : 'center' }}
         >
-          {accessories.map((item) => (
+          {accessories.map((item, idx) => (
             <div
-              key={item.id}
-              className="flex-shrink-0 bg-white rounded-xl shadow hover:shadow-md transition overflow-hidden"
+              key={item.id + '-' + idx}
+              onClick={() => addToCart(item)}
+              className="flex-shrink-0 bg-white rounded-xl shadow hover:shadow-lg hover:-translate-y-2 cursor-pointer transition-transform duration-300 overflow-hidden"
               style={{ width: itemW }}
             >
               <div className="w-full aspect-square overflow-hidden p-2">
@@ -109,11 +110,7 @@ export default function AccessoriesSection() {
 
       {showControls && (
         <button
-          onClick={() =>
-            setIndex((i) =>
-              Math.min(i + 1, accessories.length - visible)
-            )
-          }
+          onClick={() => setIndex((i) => Math.min(i + 1, accessories.length - visible))}
           disabled={index >= accessories.length - visible}
           className="absolute right-0 top-1/2 -translate-y-1/2 z-10 p-2 bg-white/80 rounded-full shadow disabled:opacity-30"
         >

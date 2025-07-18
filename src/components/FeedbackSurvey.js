@@ -29,10 +29,9 @@ export default function FeedbackSurvey() {
 
             {/* Bảng khảo sát */}
             <div
-                className={`bg-white shadow-lg rounded-l-xl p-4 w-[300px] transition-all duration-500 ${visible ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0 pointer-events-none'
-                    }`}
+                className={`bg-white shadow-lg rounded-l-xl p-4 w-[300px] fixed right-[-320px] bottom-20 transition-all duration-500 ${visible ? 'translate-x-[-320px] opacity-100' : 'translate-x-0 opacity-0 pointer-events-none'}`}
             >
-                <h3 className="font-bold text-lg mb-2 text-center">TRẢI NGHIỆM CỦA BẠN</h3>
+                <h3 className="font-bold text-lg msb-2 text-center">TRẢI NGHIỆM CỦA BẠN</h3>
                 <p className="text-sm text-gray-700 text-center mb-3">
                     Khả năng bạn sẽ giới thiệu trang <span className="font-semibold">honviet.onrender.com</span> cho bạn bè ở mức độ nào?
                 </p>

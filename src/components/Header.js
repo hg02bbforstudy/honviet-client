@@ -6,8 +6,21 @@ export default function Header() {
   const [showTopBar, setShowTopBar] = useState(true);
   const [showMainBar, setShowMainBar] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const savedUser = localStorage.getItem('user');
+    if (savedUser) {
+      setUser(JSON.parse(savedUser));
+    }
+  }, []);
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    setUser(null);
+    navigate('/login');
+  };
   useEffect(() => {
     const handleScroll = () => {
       setShowTopBar(window.scrollY < 10);
@@ -35,9 +48,8 @@ export default function Header() {
     <header className="fixed top-0 left-0 w-full z-50 transition-all duration-300 ease-in-out">
       {/* Hàng 1 – Dòng đỏ */}
       <div
-        className={`bg-honvietRed text-white text-sm font-semibold transition-all duration-300 ease-in-out flex items-center justify-center ${
-          showTopBar ? 'h-8 opacity-100' : 'h-0 opacity-0 overflow-hidden'
-        }`}
+        className={`bg-honvietRed text-white text-sm font-semibold transition-all duration-300 ease-in-out flex items-center justify-center ${showTopBar ? 'h-8 opacity-100' : 'h-0 opacity-0 overflow-hidden'
+          }`}
       >
         Giao hàng miễn phí cho thành viên của Hồn Việt
       </div>
@@ -47,19 +59,37 @@ export default function Header() {
         {/* Hàng 2 */}
         <div className="flex justify-between items-center px-4 py-3 bg-black/30 backdrop-blur-md shadow-md">
           <div className="w-16 h-16 bg-gray-300 rounded-md">
-            <img src="https://res.cloudinary.com/dhhljyybq/image/upload/v1752597473/Avatar_2_h5gtk9.png" alt="Hồn Việt Logo" className="w-full h-full object-cover" />  
+            <img src="https://res.cloudinary.com/dhhljyybq/image/upload/v1752597473/Avatar_2_h5gtk9.png" alt="Hồn Việt Logo" className="w-full h-full object-cover" />
           </div> {/* Logo */}
 
-          <div className="hidden sm:flex gap-3">
+          <div className="hidden sm:flex gap-3 items-center">
+            {user ? (
+              <span className="text-gray-800 font-semibold flex items-center h-16">Xin chào {user.name} 👋</span>
+            ) : (
+              //không hiện gì cả
+              <span className="text-gray-800 font-semibold h-16"></span>
+            )}
             <button className="px-4 py-2 bg-honvietRed text-white rounded hover:opacity-90">
               Theo dõi đơn hàng
             </button>
-            <button
-              onClick={() => navigate('/register')}
-              className="px-4 py-2 bg-honvietGold text-white rounded hover:opacity-90"
-            >
-              Đăng ký thành viên
-            </button>
+            {user ? (
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={handleLogout}
+                  className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
+                >
+                  Đăng xuất
+                </button>
+              </div>
+            ) : (
+              <button
+                onClick={() => navigate('/register')}
+                className="px-4 py-2 bg-honvietGold text-white rounded hover:opacity-90"
+              >
+                Đăng ký thành viên
+              </button>
+            )}
+
           </div>
 
           {/* Mobile menu button */}
@@ -98,7 +128,7 @@ export default function Header() {
             placeholder="Tìm kiếm..."
             className="px-3 py-1 border border-gray-300 rounded focus:outline-none w-48"
           />
-          <button className="text-honvietRed hover:scale-110">
+          <button className="text-honvietRed hover:scale-110" onClick={() => navigate('/cart')}>
             <ShoppingCart />
           </button>
         </div>
@@ -138,19 +168,37 @@ export default function Header() {
               placeholder="Tìm kiếm..."
               className="px-3 py-1 border border-gray-300 rounded w-full"
             />
-            <button className="text-honvietRed hover:scale-110 self-start">
+            <button className="text-honvietRed hover:scale-110 self-start" onClick={() => navigate('/cart')}>
               <ShoppingCart />
             </button>
             <hr />
+
+            {user ? (
+              <span className="text-gray-800 font-semibold">Xin chào {user.name} 👋</span>
+            ) : (
+              //không hiện gì cả
+              <span className="text-gray-800 font-semibold"></span>
+            )}
+
             <button className="text-left px-3 py-2 bg-honvietRed text-white rounded hover:opacity-90">
               Theo dõi đơn hàng
             </button>
-            <button
-              onClick={() => navigate('/register')}
-              className="text-left px-3 py-2 bg-honvietGold text-white rounded hover:opacity-90"
-            >
-              Đăng ký thành viên
-            </button>
+            {user ? (
+              <button
+                onClick={handleLogout}
+                className="text-left px-3 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
+              >
+                Đăng xuất
+              </button>
+            ) : (
+              // Nút đăng ký thành viên chỉ hiển thị khi chưa đăng nhập
+              <button
+                onClick={() => navigate('/register')}
+                className="text-left px-3 py-2 bg-honvietGold text-white rounded hover:opacity-90"
+              >
+                Đăng ký thành viên
+              </button>
+            )}
           </div>
         )}
       </div>

@@ -1,16 +1,26 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { loginUser } from '../api';
 
 export default function LoginPage() {
   const navigate = useNavigate();
   const [form, setForm] = useState({ email: '', password: '' });
+  const [error, setError] = useState('');
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleLogin = () => {
-    console.log('Đăng nhập:', form);
+  const handleLogin = async () => {
+    const res = await loginUser(form);
+    if (res.token) {
+      localStorage.setItem('token', res.token);
+      localStorage.setItem('user', JSON.stringify(res.user));
+      localStorage.setItem("currentUser", res.user.email);
+      navigate('/'); // hoặc trang khác
+    } else {
+      setError(res.message || 'Đăng nhập thất bại');
+    }
   };
 
   return (
@@ -34,7 +44,7 @@ export default function LoginPage() {
           value={form.password}
           onChange={handleChange}
         />
-
+        {error && <p className="text-red-500 mb-3">{error}</p>}
         <button
           onClick={handleLogin}
           className="bg-honvietRed text-white w-full py-2 rounded hover:opacity-90 mb-3"
