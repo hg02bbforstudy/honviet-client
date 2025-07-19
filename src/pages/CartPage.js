@@ -62,7 +62,7 @@ export default function CartPage() {
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between px-4 py-3 bg-black/30 backdrop-blur-md shadow-md ">
         <div className="flex items-center gap-3 w-full">
           <div className="w-16 h-16 bg-gray-300 rounded-md">
-            <img src="https://res.cloudinary.com/dhhljyybq/image/upload/v1752597473/Avatar_2_h5gtk9.png" alt="Hồn Việt Logo" className="w-full h-full object-cover" />
+            <img src="https://res.cloudinary.com/dhhljyybq/image/upload/**f_auto,q_auto/**v1752597473/Avatar_2_h5gtk9.png" alt="Hồn Việt Logo" className="w-full h-full object-cover" />
           </div>
           {user ? (
             <span className="text-gray-800 font-semibold">Xin chào {user.name} 👋</span>
