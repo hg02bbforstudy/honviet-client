@@ -1,4 +1,12 @@
-const API_BASE = 'http://localhost:5000/api'; // Đổi thành URL thực khi deploy
+// Tự động chọn API_BASE theo môi trường online/offline
+const API_BASE =
+  window.location.hostname === 'localhost'
+    ? 'http://localhost:5000/api'
+    : 'https://honviet-server.onrender.com/api';
+export const fetchPosts = async () => {
+  const res = await fetch(`${API_BASE}/posts`);
+  return res.json();
+};
 
 export const registerUser = async (data) => {
   const res = await fetch(`${API_BASE}/auth/register`, {
