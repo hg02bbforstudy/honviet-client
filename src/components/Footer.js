@@ -35,7 +35,7 @@ export default function Footer() {
         {/* Logo + giới thiệu */}
         <div>
           <div className="w-16 h-16 bg-honvietRed rounded flex items-center justify-center text-white text-2xl font-bold mb-3">
-            <img src="https://res.cloudinary.com/dhhljyybq/image/upload/**f_auto,q_auto/**v1752597473/Avatar_2_h5gtk9.png" alt="Hồn Việt Logo" className="w-full h-full object-cover" />  
+            <img src="https://res.cloudinary.com/dhhljyybq/image/upload/v1752597473/Avatar_2_h5gtk9.png" alt="Hồn Việt Logo" className="w-full h-full object-cover" />  
           </div>
           <p className="text-gray-700">
             Hồn Việt – chạm vào bản sắc, giữ lấy tinh hoa

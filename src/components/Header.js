@@ -59,7 +59,7 @@ export default function Header() {
         {/* Hàng 2 */}
         <div className="flex justify-between items-center px-4 py-3 bg-black/30 backdrop-blur-md shadow-md">
           <div className="w-16 h-16 bg-gray-300 rounded-md">
-            <img src="https://res.cloudinary.com/dhhljyybq/image/upload/**f_auto,q_auto/**v1752597473/Avatar_2_h5gtk9.png" alt="Hồn Việt Logo" className="w-full h-full object-cover" />
+            <img src="https://res.cloudinary.com/dhhljyybq/image/upload/v1752597473/Avatar_2_h5gtk9.png" alt="Hồn Việt Logo" className="w-full h-full object-cover" />
           </div> {/* Logo */}
 
           <div className="hidden sm:flex gap-3 items-center">
