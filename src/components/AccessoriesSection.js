@@ -5,27 +5,44 @@ import { addToCart } from '../utils/cartUtils';
 
 const GAP = 16;
 const formatPrice = (price) => price.toLocaleString('vi-VN') + '₫';
-const getVisible = (w) => (w >= 1280 ? 5 : w >= 768 ? 3 : 2);
+const getVisible = (w) => (w >= 1280 ? 5 : w >= 1024 ? 4 : w >= 768 ? 3 : 2);
 
 const localAccessories = [
   {
     id: 101,
-    image: 'https://picsum.photos/seed/acc1/300/300',
-    name: 'Túi đựng board game',
-    price: 190000,
-  },
-  {
+    image: 'https://picsum.photos/seed/tote/300/300',
+    name: 'Túi Tote',
+    price: 60000,
+    brand: 'Hồn Việt',
+    },
+    {
     id: 102,
-    image: 'https://picsum.photos/seed/acc2/300/300',
-    name: 'Sleeves bảo vệ bài (100 cái)',
-    price: 85000,
-  },
-  {
+    image: 'https://picsum.photos/seed/cup/300/300',
+    name: 'Cốc sứ',
+    price: 65000,
+    brand: 'Hồn Việt',
+    },
+    {
     id: 103,
-    image: 'https://picsum.photos/seed/acc3/300/300',
-    name: 'Hộp đựng token đa năng',
-    price: 135000,
-  },
+    image: 'https://picsum.photos/seed/hat/300/300',
+    name: 'Mũ lưỡi trai',
+    price: 70000,
+    brand: 'Hồn Việt',
+    },
+    {
+    id: 104,
+    image: 'https://picsum.photos/seed/fan/300/300',
+    name: 'Quạt cầm tay',
+    price: 50000,
+    brand: 'Hồn Việt',
+    },
+    {
+    id: 105,
+    image: 'https://picsum.photos/seed/sticker/300/300',
+    name: 'Sticker chủ đề Văn hóa',
+    price: 10000,
+    brand: 'Hồn Việt',
+    }
 ];
 
 export default function AccessoriesSection() {
@@ -96,7 +113,8 @@ export default function AccessoriesSection() {
                 />
               </div>
               <div className="p-2 text-center">
-                <div className="font-medium text-gray-800 text-sm line-clamp-2 min-h-[40px]">
+                <div className="font-bold text-honvietRed uppercase text-xs">{item.brand}</div>
+                <div className="font-medium text-gray-800 text-sm line-clamp-2 min-h-[20px]">
                   {item.name}
                 </div>
                 <div className="mt-1 text-honvietRed font-bold text-base">

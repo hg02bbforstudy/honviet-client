@@ -4,6 +4,7 @@ export default function FeedbackSurvey() {
     const [visible, setVisible] = useState(false);
     const [score, setScore] = useState(null);
     const [submitted, setSubmitted] = useState(false);
+    const [hideAll, setHideAll] = useState(false); // Thêm state này
 
     const handleSend = () => {
         console.log('Điểm feedback:', score);
@@ -12,8 +13,11 @@ export default function FeedbackSurvey() {
             setVisible(false);
             setSubmitted(false);
             setScore(null);
+            setHideAll(true); // Ẩn hoàn toàn feedback sau khi gửi
         }, 1500); // Tự ẩn bảng sau khi gửi
     };
+
+    if (hideAll) return null;
 
     return (
         <div className="fixed right-0 bottom-20 z-50">

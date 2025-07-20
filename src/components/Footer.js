@@ -38,7 +38,7 @@ export default function Footer() {
             <img src="https://res.cloudinary.com/dhhljyybq/image/upload/v1752597473/Avatar_2_h5gtk9.png" alt="Hồn Việt Logo" className="w-full h-full object-cover" />  
           </div>
           <p className="text-gray-700">
-            Hồn Việt – chạm vào bản sắc, giữ lấy tinh hoa
+            Hồn Việt – Chạm vào bản sắc, giữ lấy tinh hoa
           </p>
           <div className="flex mt-4 gap-3 text-white">
             <a href="#" className="bg-honvietRed w-8 h-8 flex items-center justify-center rounded hover:bg-honvietGold"><FaFacebookF /></a>
@@ -50,9 +50,9 @@ export default function Footer() {
         {/* Thông tin liên hệ */}
         <div>
           <div className="font-bold mb-2">THÔNG TIN LIÊN HỆ</div>
-          <p>Địa chỉ: <span className="font-bold">04 Liễu Giai - Cống Vị - Ba Đình - Hà Nội</span></p>
-          <p className="mt-2">Điện thoại: <span className="font-bold">038 282 9000</span></p>
-          <p>Email: <a href="mailto:Honviet36@gmail.com" className="font-bold">Honviet36@gmail.com</a></p>
+          <p>Địa chỉ: <span className="">04 Liễu Giai - Cống Vị - Ba Đình - Hà Nội</span></p>
+          <p className="mt-2">Điện thoại: <span className="">038 282 9000</span></p>
+          <p>Email: <a href="mailto:Honviet36@gmail.com" className="">Honviet36@gmail.com</a></p>
         </div>
 
         {/* Chính sách */}

@@ -54,6 +54,13 @@ const products = [
     name: 'Bộ board game miền Nam',
     price: 169000,
   },
+  {
+    id: 8,
+    image: 'https://picsum.photos/seed/qua-tang/200/200',
+    brand: 'Hồn Việt',
+    name: 'Bộ quà tặng cao cấp',
+    price: 899000,
+  },
 ];
 
 const formatPrice = (p) => p.toLocaleString('vi-VN') + '₫';
