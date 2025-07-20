@@ -1,10 +1,11 @@
 import AutoSlider from '../components/AutoSlider';
 import ProductCarousel from '../components/ProductCarousel';
 import AccessoriesSection from '../components/AccessoriesSection';
-import BlogSection from '../components/BlogSection';
+// import BlogSection from '../components/BlogSection';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import FeedbackSurvey from '../components/FeedbackSurvey';
+import BlogSlider from '../components/BlogSection2';
 
 const Home = () => {
     return (
@@ -25,7 +26,7 @@ const Home = () => {
                 </div>
 
                 <div id="section-blog" className="scroll-mt-[140px]">
-                    <BlogSection />
+                    <BlogSlider />
                 </div>
 
 

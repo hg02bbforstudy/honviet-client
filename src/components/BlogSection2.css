@@ -1,0 +1,46 @@
+@keyframes slideUp {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(-30px); opacity: 0.7; }
+}
+
+@keyframes slideDownFadeIn {
+  0% { transform: translateY(-30px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+.slide-up {
+  animation: slideUp 0.5s;
+}
+
+.slide-down {
+  animation: slideDownFadeIn 0.5s reverse;
+}
+
+.slide-down-fadein {
+  animation: slideDownFadeIn 0.5s;
+}
+
+/* Custom scrollbar for BlogSection2 glassmorphism */
+.flex-1.overflow-y-auto::-webkit-scrollbar {
+  width: 8px;
+  background: transparent;
+}
+.flex-1.overflow-y-auto::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.25);
+  border-radius: 8px;
+  backdrop-filter: blur(2px);
+  transition: background 0.3s;
+}
+.flex-1.overflow-y-auto::-webkit-scrollbar-thumb:hover {
+  background: rgba(255,255,255,0.5);
+}
+.flex-1.overflow-y-auto::-webkit-scrollbar-track {
+  background: rgba(255,255,255,0.05);
+  border-radius: 8px;
+}
+
+/* Firefox */
+.flex-1.overflow-y-auto {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.3) rgba(255,255,255,0.08);
+}
