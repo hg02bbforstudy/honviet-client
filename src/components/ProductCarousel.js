@@ -149,6 +149,7 @@ export default function ProductCarousel() {
       deltaY,
     });
     addToCart(product);
+    window.dispatchEvent(new Event('cart-updated'));
     requestAnimationFrame(() => {
       setAnimating(true);
       setTimeout(() => {

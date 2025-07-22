@@ -21,7 +21,11 @@ export default function CartFab() {
   useEffect(() => {
     updateCartCount();
     window.addEventListener('storage', updateCartCount);
-    return () => window.removeEventListener('storage', updateCartCount);
+    window.addEventListener('cart-updated', updateCartCount);
+    return () => {
+      window.removeEventListener('storage', updateCartCount);
+      window.removeEventListener('cart-updated', updateCartCount);
+    };
   }, []);
 
   return (

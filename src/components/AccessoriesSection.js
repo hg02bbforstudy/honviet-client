@@ -103,6 +103,7 @@ export default function AccessoriesSection() {
       deltaY,
     });
     addToCart(item);
+    window.dispatchEvent(new Event('cart-updated'));
     requestAnimationFrame(() => {
       setAnimating(true);
       setTimeout(() => {

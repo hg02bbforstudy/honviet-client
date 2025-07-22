@@ -6,6 +6,7 @@ import {
     clearCart,
 } from "../utils/cartUtils";
 import { useNavigate } from "react-router-dom";
+import emailjs from '@emailjs/browser';
 
 export default function CartPage() {
     const [cartItems, setCartItems] = useState([]);
@@ -26,13 +27,6 @@ export default function CartPage() {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    const handleLogout = () => {
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
-        setUser(null);
-        navigate('/login');
-    };
-
     const handleRemove = (id) => {
         removeFromCart(id);
         setCartItems(getCart());
@@ -48,6 +42,8 @@ export default function CartPage() {
         setCartItems([]);
     };
 
+    const handleCheckout = async () => {
+    };
     const total = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
     return (
@@ -60,28 +56,28 @@ export default function CartPage() {
             </div>
             {/* Hàng 2 */}
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between px-4 py-3 bg-black/30 backdrop-blur-md shadow-md ">
-        <div className="flex items-center gap-3 w-full">
-          <div className="w-16 h-16 bg-gray-300 rounded-md">
-            <img src="https://res.cloudinary.com/dhhljyybq/image/upload/v1752597473/Avatar_2_h5gtk9.png" alt="Hồn Việt Logo" className="w-full h-full object-cover" />
-          </div>
-          {user ? (
-            <span className="text-gray-800 font-semibold">Xin chào {user.name} 👋</span>
-          ) : (
-            <span className="text-gray-800 font-semibold"></span>
-          )}
-        </div>
-        {/* ...nút đăng ký thành viên... */}
-        <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 items-center mt-2 sm:mt-0">
-          {!user && (
-            <button
-              onClick={() => navigate('/login')}
-              className="px-4 py-2 bg-honvietGold text-white rounded hover:opacity-90 w-full sm:w-auto"
-            >
-              Đăng Nhập
-            </button>
-          )}
-        </div>
-      </div>
+                <div className="flex flex-row justify-between items-center gap-3 max-w-4xl mx-auto w-full">
+                    <div className="w-16 h-16 bg-gray-300 rounded-md">
+                        <img src="https://res.cloudinary.com/dhhljyybq/image/upload/v1752597473/Avatar_2_h5gtk9.png" alt="Hồn Việt Logo" className="w-full h-full object-cover" />
+                    </div>
+                    {user ? (
+                        <span className="text-gray-800 font-semibold">Xin chào {user.name} 👋</span>
+                    ) : (
+                        <span className="text-gray-800 font-semibold"></span>
+                    )}
+                </div>
+                {/* ...nút đăng ký thành viên... */}
+                <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 items-center mt-2 sm:mt-0">
+                    {!user && (
+                        <button
+                            onClick={() => navigate('/login')}
+                            className="px-4 py-2 bg-honvietGold text-white rounded hover:opacity-90 w-full sm:w-auto"
+                        >
+                            Đăng Nhập
+                        </button>
+                    )}
+                </div>
+            </div>
 
             {/* Nội dung giỏ hàng */}
             <div className="px-2 py-4 sm:p-6 max-w-4xl mx-auto">
@@ -163,6 +159,12 @@ export default function CartPage() {
                             <div className="text-xl font-bold text-honvietGold">
                                 Tổng cộng: {total.toLocaleString()}₫
                             </div>
+                            <button
+                                className="px-6 py-2 bg-honvietGold text-black rounded font-semibold shadow hover:bg-honvietGold/80"
+                            onClick={handleCheckout}
+                            >
+                                Thanh toán
+                            </button>
                         </div>
                     </>
                 )}
