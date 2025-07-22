@@ -69,7 +69,7 @@ export default function Header() {
               //không hiện gì cả
               <span className="text-gray-800 font-semibold h-16"></span>
             )}
-            <button className="px-4 py-2 bg-honvietRed text-white rounded hover:opacity-90">
+            <button className="px-4 py-2 bg-honvietRed text-white rounded hover:opacity-90" onClick={() => navigate('/cart')}>
               Theo dõi đơn hàng
             </button>
             {user ? (
@@ -180,7 +180,7 @@ export default function Header() {
               <span className="text-gray-800 font-semibold"></span>
             )}
 
-            <button className="text-left px-3 py-2 bg-honvietRed text-white rounded hover:opacity-90">
+            <button className="text-left px-3 py-2 bg-honvietRed text-white rounded hover:opacity-90" onClick={() => navigate('/cart')}>
               Theo dõi đơn hàng
             </button>
             {user ? (
