@@ -10,35 +10,35 @@ const getVisible = (w) => (w >= 1280 ? 5 : w >= 1024 ? 4 : w >= 768 ? 3 : 2);
 const localAccessories = [
   {
     id: 101,
-    image: 'https://picsum.photos/seed/tote/300/300',
+    image: 'https://res.cloudinary.com/dhhljyybq/image/upload/v1753117421/STICKER_2_isogws.png',
     name: 'Túi Tote',
     price: 60000,
     brand: 'Hồn Việt',
     },
     {
     id: 102,
-    image: 'https://picsum.photos/seed/cup/300/300',
+    image: 'https://res.cloudinary.com/dhhljyybq/image/upload/v1753117422/STICKER_1_swe1jc.png',
     name: 'Cốc sứ',
     price: 65000,
     brand: 'Hồn Việt',
     },
     {
     id: 103,
-    image: 'https://picsum.photos/seed/hat/300/300',
+    image: 'https://res.cloudinary.com/dhhljyybq/image/upload/v1753117421/STICKER_2_isogws.png',
     name: 'Mũ lưỡi trai',
     price: 70000,
     brand: 'Hồn Việt',
     },
     {
     id: 104,
-    image: 'https://picsum.photos/seed/fan/300/300',
+    image: 'https://res.cloudinary.com/dhhljyybq/image/upload/v1753117422/STICKER_1_swe1jc.png',
     name: 'Quạt cầm tay',
     price: 50000,
     brand: 'Hồn Việt',
     },
-    {
+    {//oke
     id: 105,
-    image: 'https://picsum.photos/seed/sticker/300/300',
+    image: 'https://res.cloudinary.com/dhhljyybq/image/upload/v1753117422/STICKER_dyzzii.png',
     name: 'Sticker chủ đề Văn hóa',
     price: 10000,
     brand: 'Hồn Việt',
@@ -109,7 +109,7 @@ export default function AccessoriesSection() {
                 <img
                   src={item.image}
                   alt={item.name}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover bg-gray-200"
                 />
               </div>
               <div className="p-2 text-center">

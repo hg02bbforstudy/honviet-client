@@ -7,56 +7,56 @@ const GAP = 16; // px, vì gap-4 = 1rem = 16px
 const products = [
   {
     id: 1,
-    image: 'https://picsum.photos/seed/combo3bo/200/200',
+    image: 'https://res.cloudinary.com/dhhljyybq/image/upload/v1753117424/combo_2_b%E1%BB%99_B%E1%BA%AFc-Trung_1_v0cbqu.jpg',
     brand: 'Hồn Việt',
     name: 'Combo 3 bộ board games',
     price: 449000,
   },
-  {
+  {//oke
     id: 2,
-    image: 'https://picsum.photos/seed/combo2bac-trung/200/200',
+    image: 'https://res.cloudinary.com/dhhljyybq/image/upload/v1753117422/Combo_2_b%E1%BB%99_B%E1%BA%AFc_-_Trung_wojsp8.jpg',
     brand: 'Hồn Việt',
     name: 'Combo 2 bộ miền Bắc-Trung',
     price: 299000,
   },
   {
     id: 3,
-    image: 'https://picsum.photos/seed/combo2bac-nam/200/200',
+    image: 'https://res.cloudinary.com/dhhljyybq/image/upload/v1753117424/combo_2_b%E1%BB%99_B%E1%BA%AFc-Trung_1_v0cbqu.jpg',
     brand: 'Hồn Việt',
     name: 'Combo 2 bộ miền Bắc-Nam',
     price: 299000,
   },
   {
     id: 4,
-    image: 'https://picsum.photos/seed/combo2trung-nam/200/200',
+    image: 'https://res.cloudinary.com/dhhljyybq/image/upload/v1753117422/Combo_2_b%E1%BB%99_B%E1%BA%AFc_-_Trung_wojsp8.jpg',
     brand: 'Hồn Việt',
     name: 'Combo 2 bộ miền Trung-Nam',
     price: 299000,
   },
-  {
+  {//oke
     id: 5,
-    image: 'https://picsum.photos/seed/bac/200/200',
+    image: 'https://res.cloudinary.com/dhhljyybq/image/upload/v1753117423/1_b%E1%BB%99_mi%E1%BB%81n_B%E1%BA%AFc_jylh8i.jpg',
     brand: 'Hồn Việt',
     name: 'Bộ board game miền Bắc',
     price: 169000,
   },
   {
     id: 6,
-    image: 'https://picsum.photos/seed/trung/200/200',
+    image: 'https://res.cloudinary.com/dhhljyybq/image/upload/v1753117422/Combo_2_b%E1%BB%99_B%E1%BA%AFc_-_Trung_wojsp8.jpg',
     brand: 'Hồn Việt',
     name: 'Bộ board game miền Trung',
     price: 169000,
   },
   {
     id: 7,
-    image: 'https://picsum.photos/seed/nam/200/200',
+    image: 'https://res.cloudinary.com/dhhljyybq/image/upload/v1753117424/combo_2_b%E1%BB%99_B%E1%BA%AFc-Trung_1_v0cbqu.jpg',
     brand: 'Hồn Việt',
     name: 'Bộ board game miền Nam',
     price: 169000,
   },
   {
     id: 8,
-    image: 'https://picsum.photos/seed/qua-tang/200/200',
+    image: 'https://res.cloudinary.com/dhhljyybq/image/upload/v1753117422/Combo_2_b%E1%BB%99_B%E1%BA%AFc_-_Trung_wojsp8.jpg',
     brand: 'Hồn Việt',
     name: 'Bộ quà tặng cao cấp',
     price: 899000,
@@ -172,7 +172,7 @@ export default function ProductCarousel() {
                 src={p.image}
                 alt={p.name}
                 draggable={false}          /* ngăn ghost khi kéo */
-                className="rounded-t-xl w-full h-[260px] object-cover select-none" // tăng chiều cao ảnh
+                className="rounded-t-xl w-full h-[260px] object-contain select-none bg-gray-200" // tăng chiều cao ảnh
               />
               <div className="p-3 text-sm">
                 <div className="font-bold text-honvietRed uppercase text-xs">{p.brand}</div>

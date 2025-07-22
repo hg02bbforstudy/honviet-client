@@ -4,7 +4,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const blogSlides = [
   {
-    background: 'https://picsum.photos/seed/bac1/800/400',
+    background: 'https://res.cloudinary.com/dhhljyybq/image/upload/v1753114994/518600161_670305736056328_8216519582606535857_n_x8mvup.jpg',
     text: 'Hầu đồng là một nghi thức trong tín ngưỡng dân gian và tôn giáo thờ Mẫu, đặc trưng của nhiều dân tộc Việt Nam.',
     textFull: `Hầu đồng, còn được gọi là hầu bóng hay đồng bóng, là một nghi thức trong tín ngưỡng dân gian và tôn giáo thờ Mẫu – một dòng Shaman giáo đặc trưng của nhiều dân tộc, bao gồm cả người Việt Nam.
 Thực chất, hầu đồng là một nghi thức giao tiếp với các vị thần linh thông qua trung gian là các đồng nam, đồng nữ. Khi thần linh nhập vào người hầu đồng, họ sẽ thực hiện các nghi thức như múa hát, chầu văn và truyền đạt thông điệp từ thần linh.
@@ -12,7 +12,7 @@ Hiện tại, không có một định nghĩa cụ thể nào cho hầu đồng,
 Ngày nay, hầu đồng đã trở thành một phần không thể thiếu trong đời sống tín ngưỡng của nhân dân, nhờ sự gắn bó sâu sắc với đời sống tâm linh của người dân và tính độc đáo của các nghi thức trong hầu đồng, vào ngày 1/12/2016, UNESCO đã chính thức công nhận “Những thực hành liên quan đến tín ngưỡng thờ Mẫu Tam phủ của người Việt” là Di sản văn hóa phi vật thể đại diện của nhân loại tại Ethiopia.
 ` },
   {
-    background: 'https://picsum.photos/seed/bac2/800/400',
+    background: 'https://res.cloudinary.com/dhhljyybq/image/upload/v1753115277/7aff957dc16ef02527871c2963c351c1_dtw761.jpg',
     text: 'Tranh Đông Hồ là dòng tranh dân gian nổi tiếng xuất xứ từ làng Đông Hồ, Bắc Ninh.',
     textFull:
  `Là một trong ba dòng tranh dân gian của Việt Nam xuất xứ từ làng Đông Hồ (Thuận Thành, Bắc Ninh) có lịch sử trên 400 năm. Làng Đông Hồ nằm sát ngay bờ sông Đuống, xưa còn gọi là làng Mái, các cụ vẫn truyền lại câu thơ rằng:
@@ -24,7 +24,7 @@ Tranh Đông Hồ thuộc dòng tranh in từ ván khắc gỗ, do người dân
 Về thể loại, dựa vào nội dung chủ đề, có thể chia tranh Đông Hồ thành 7 loại chính, gồm tranh thờ, tranh chúc tụng, tranh lịch sử, tranh truyện, tranh phương ngôn, tranh cảnh vật và tranh phản ánh sinh hoạt.
 `  },
   {
-    background: 'https://picsum.photos/seed/bac3/800/400',
+    background: 'https://res.cloudinary.com/dhhljyybq/image/upload/v1753114950/16698839-lang-duc-dong-ngu-xa-2_wxo5tl.jpg',
     text: 'Làng Đúc Đồng Ngũ Xã là một trong bốn nghề tinh hoa bậc nhất của Kinh thành Thăng Long.',
     textFull:
       `Được hình thành từ thế kỷ XVII, Làng nghề Đúc đồng truyền thống Ngũ Xã được coi là một trong bốn nghề tinh hoa bậc nhất của Kinh thành Thăng Long - Hà Nội.
@@ -36,7 +36,7 @@ Tượng Thiền Sư Minh Không – Ông tổ Nghề Đúc đồng Việt Nam
 Tượng chân dung Hồ Chủ Tịch được đặt tại Văn phòng Quốc hội Chủ tịch nước.`
   },
   {
-    background: 'https://picsum.photos/seed/bac4/800/400',
+    background: 'https://res.cloudinary.com/dhhljyybq/image/upload/v1753115045/le_hoi_chua_huong_20240206144152_nm40fx.webp',
     text: 'Lễ hội chùa Hương là một trong những lễ hội lớn nhất miền Bắc dịp Tết.',
     textFull:
       `Lễ hội chùa Hương, một trong những lễ hội miền Bắc dịp Tết mang đậm bản sắc văn hóa Việt, được tổ chức tại xã Hương Sơn, huyện Mỹ Đức, cách trung tâm Hà Nội khoảng 70 km về phía Nam. Địa điểm này nằm giữa một quần thể danh thắng với phong cảnh sơn thủy hữu tình, bao quanh bởi dãy núi đá vôi và dòng sông Đáy trong xanh.
@@ -50,7 +50,7 @@ Phần hội của lễ hội chùa Hương
 Bên cạnh các nghi thức tâm linh, phần hội của lễ hội chùa Hương luôn diễn ra sôi nổi và đầy màu sắc. Các hoạt động văn hóa dân gian như múa rối nước, hát chèo, diễn xướng dân gian được trình diễn sinh động, mang đậm bản sắc văn hóa miền Bắc.`
   },
   {
-    background: 'https://picsum.photos/seed/trung1/800/400',
+    background: 'https://res.cloudinary.com/dhhljyybq/image/upload/v1753115010/8723c28efa3ef8162b0057d282190732_qzkcoj.jpg',
     text: 'Lễ hội Cầu ngư là lễ trọng lớn nhất trong năm của cộng đồng cư dân biển miền Trung.',
     textFull: `Đối với đời sống cộng đồng cư dân biển, Lễ hội Cầu ngư là lễ trọng lớn nhất trong năm, vì đây là lễ hội cầu mùa-cầu ngư hay lễ tế ngư thần và cầu xin thần ban cho một năm “trời yên biển lặng, tôm cá đầy khoang”.
 Lễ hội Cầu ngư không chỉ thể hiện bản sắc văn hóa dân gian đặc sắc, mang tính vùng miền của ngư dân mỗi địa phương có di sản mà còn là môi trường bảo tồn, làm giàu và phát huy sự đa dạng của bản sắc văn hóa dân tộc, là cơ hội phát huy giá trị văn hóa biển Việt Nam. Bên cạnh đó, Lễ hội Cầu ngư chính là nguồn sử liệu, là những bằng chứng xác thực về chủ quyền biển đảo và kinh nghiệm ứng xử với biển đảo của các thế hệ người Việt Nam trong quá khứ, hiện tại và tương lai…
@@ -58,7 +58,7 @@ Lễ hội Cầu ngư nhằm cầu quốc thái, dân an, trời yên biển l�
 Đồng thời, lễ hội còn là nơi lưu giữa các loại hình nghệ thuật dân gian truyền thống và là một lễ hội quan trọng cần được duy trì bảo tồn và phát huy.`
   },
   {
-    background: 'https://picsum.photos/seed/trung2/800/400',
+    background: 'https://res.cloudinary.com/dhhljyybq/image/upload/v1753115191/optimize_nha-nhac-cung-dinh-hue-topbanner_optimized_xvdfk6.jpg',
     text: 'Nhã nhạc cung đình Huế là di sản văn hóa phi vật thể và truyền khẩu nhân loại.',
     textFull: `Nhã nhạc cung đình là thể loại nhạc có từ thời phong kiến được biểu diễn phục vụ trong cung đình vào những dịp lễ như: Đại triều, Thường triều, Tế giao, Tế miếu… Nhạc có lời hát tao nhã cùng điệu thức cao sang, quý phái góp phần tạo sự trang trọng cho các buổi lễ. Đây còn là biểu tượng của vương quyền và sự trường tồn, hưng thịnh của triều đại. Chính vì thế Nhã nhạc cung đình Huế rất được các triều đại phong kiến Việt Nam coi trọng. 
 Nhã nhạc cung đình Huế được UNESCO công nhận là di sản văn hóa phi vật thể và truyền khẩu nhân loại vào 7/11/2003 và lễ đón bằng công nhận được tổ chức tại thủ đô Paris nước Pháp vào ngày 31/1/2004.
@@ -66,7 +66,7 @@ Nhã nhạc cung đình Huế được UNESCO công nhận là di sản văn hó
 Nhã nhạc còn được trình diễn trong các nghi thức ngoại giao, biểu diễn phục vụ khách du lịch và dân địa phương trong các dịp đại lễ và tết cổ truyền…`
   },
   {
-    background: 'https://picsum.photos/seed/nam1/800/400',
+    background: 'https://res.cloudinary.com/dhhljyybq/image/upload/v1753114885/841e76a733a506cbca5a5f5c2dbeb99f_pyki0e.jpg',
     text: 'Đờn ca tài tử là loại hình nghệ thuật dân gian đặc trưng của vùng Nam Bộ.',
     textFull: `Đờn ca tài tử là một loại hình nghệ thuật dân gian đặc trưng của vùng đất Nam Bộ, đã được Tổ chức Giáo dục, Khoa học và văn hóa của Liên hợp quốc (UNESCO) công nhận là Di sản văn hóa phi vật thể đại diện của nhân loại.
 Đờn ca tài tử hình thành và phát triển từ cuối thế kỷ 19, bắt nguồn từ nhạc lễ, Nhã nhạc cung đình Huế và văn học dân gian. Đờn ca tài tử là loại hình nghệ thuật dân gian đặc trưng của vùng Nam Bộ. Đây là loại hình nghệ thuật của đàn và ca, do những người bình dân, thanh niên nam nữ nông thôn Nam Bộ hát ca sau những giờ lao động.
@@ -77,7 +77,9 @@ Nhã nhạc còn được trình diễn trong các nghi thức ngoại giao, bi�
 export default function BlogSlider() {
   const [index, setIndex] = useState(0);
   const [expanded, setExpanded] = useState(false);
+  const [progress, setProgress] = useState(0); // phần trăm tiến trình
   const timer = useRef(null);
+  const progressTimer = useRef(null);
 
   const nextSlide = () => {
     setExpanded(false);
@@ -91,10 +93,21 @@ export default function BlogSlider() {
 
   useEffect(() => {
     clearTimeout(timer.current);
+    clearInterval(progressTimer.current);
+    setProgress(0);
+    let start = Date.now();
+    const duration = 10000;
+    progressTimer.current = setInterval(() => {
+      const elapsed = Date.now() - start;
+      setProgress(Math.min(100, (elapsed / duration) * 100));
+    }, 100);
     timer.current = setTimeout(() => {
       nextSlide();
-    }, 7000);
-    return () => clearTimeout(timer.current);
+    }, duration);
+    return () => {
+      clearTimeout(timer.current);
+      clearInterval(progressTimer.current);
+    };
   }, [index]);
 
   const current = blogSlides[index];
@@ -108,20 +121,20 @@ export default function BlogSlider() {
       <div className="absolute inset-0 bg-black/50" />
 
       <div className="relative z-10 h-full flex items-center justify-center px-1 sm:px-2 md:px-6">
-        <div className={`w-full max-w-2xl bg-white/10 backdrop-blur-md p-2 sm:p-3 md:p-6 rounded-lg md:rounded-xl shadow-lg overflow-hidden flex flex-col justify-center transition-all duration-500 ${expanded ? 'min-h-[400px] max-h-[400px]' : 'min-h-[120px] max-h-[75vh]'}`}> 
-          <div className={`flex-1 overflow-y-auto transition-all duration-500 text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.7)]`}> 
+        <div className={`w-full min-w-0 max-w-[95vw] sm:max-w-xl md:max-w-2xl p-2 sm:p-4 md:p-6 rounded-lg md:rounded-xl overflow-hidden flex flex-col justify-center transition-all duration-500 ${expanded ? 'min-h-[400px] max-h-[400px]' : 'min-h-[120px] max-h-[75vh]'}`}> 
+          <div className={`flex-1 overflow-y-auto transition-all duration-500 text-white ${expanded ? 'max-h-[300px]' : 'max-h-[100px]'}`}> 
             <p className={`text-base sm:text-xl md:text-2xl font-semibold leading-relaxed transition-all duration-500 ${expanded ? 'slide-up' : ''}`}> 
               {current.text}
             </p>
             {expanded && (
-              <p className="mt-4 text-sm sm:text-lg md:text-xl font-normal leading-relaxed whitespace-pre-line slide-down-fadein">
+              <p className="mt-4 text-sm sm:text-lg md:text-xl font-normal leading-relaxed whitespace-pre-line slide-down-fadein text-left">
                 {current.textFull}
               </p>
             )}
           </div>
           {!expanded && (
             <button
-              className="mt-4 text-honvietRed font-semibold hover:underline text-base sm:text-lg"
+              className="mt-4 text-honvietGold font-semibold hover:underline text-base sm:text-lg"
               onClick={() => setExpanded(true)}
             >
               Xem thêm
@@ -130,7 +143,7 @@ export default function BlogSlider() {
         </div>
       </div>
 
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20">
+      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-2 z-20">
         {blogSlides.map((_, i) => (
           <span
             key={i}
@@ -141,18 +154,43 @@ export default function BlogSlider() {
         ))}
       </div>
 
+      {/* Progress bar dưới cùng */}
+      <div className="absolute left-0 right-0 bottom-0 h-1 bg-white/20 z-30">
+        <div
+          className="h-full bg-honvietRed transition-all duration-100"
+          style={{ width: `${progress}%` }}
+        />
+      </div>
+
+      {/* Nút chuyển slide hai bên, chỉ hiện trên tablet trở lên */}
       <button
         onClick={prevSlide}
-        className="absolute left-4 top-1/2 -translate-y-1/2 z-20 p-2 bg-white/70 hover:bg-white rounded-full shadow"
+        className="absolute left-4 top-1/2 -translate-y-1/2 z-20 p-2 bg-white/70 hover:bg-white rounded-full shadow hidden sm:block"
       >
         <ChevronLeft className="text-honvietRed w-6 h-6" />
       </button>
       <button
         onClick={nextSlide}
-        className="absolute right-4 top-1/2 -translate-y-1/2 z-20 p-2 bg-white/70 hover:bg-white rounded-full shadow"
+        className="absolute right-4 top-1/2 -translate-y-1/2 z-20 p-2 bg-white/70 hover:bg-white rounded-full shadow hidden sm:block"
       >
         <ChevronRight className="text-honvietRed w-6 h-6" />
       </button>
+
+      {/* Nút chuyển slide ở dưới, chỉ hiện trên mobile */}
+      <div className="flex sm:hidden justify-evenly absolute bottom-6 left-1/2 -translate-x-1/2 z-20 w-full">
+        <button
+          onClick={prevSlide}
+          className="p-2 bg-white/70 hover:bg-white rounded-full shadow"
+        >
+          <ChevronLeft className="text-honvietRed w-6 h-6" />
+        </button>
+        <button
+          onClick={nextSlide}
+          className="p-2 bg-white/70 hover:bg-white rounded-full shadow"
+        >
+          <ChevronRight className="text-honvietRed w-6 h-6" />
+        </button>
+      </div>
     </div>
   );
 }
