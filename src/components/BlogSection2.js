@@ -121,7 +121,7 @@ export default function BlogSlider() {
       <div className="absolute inset-0 bg-black/50" />
 
       <div className="relative z-10 h-full flex items-center justify-center px-1 sm:px-2 md:px-6">
-        <div className={`w-full min-w-0 max-w-[95vw] sm:max-w-xl md:max-w-2xl p-2 sm:p-4 md:p-6 rounded-lg md:rounded-xl overflow-hidden flex flex-col justify-center transition-all duration-500 ${expanded ? 'min-h-[400px] max-h-[400px]' : 'min-h-[120px] max-h-[75vh]'}`}> 
+        <div className={`w-full min-w-0 max-w-[95vw] sm:max-w-xl md:max-w-2xl p-2 sm:p-4 md:p-6 rounded-lg md:rounded-xl overflow-hidden flex flex-col justify-center transition-all duration-500 min-h-[120px] ${expanded ? 'max-h-[450px] md:max-h-[500px] lg:max-h-[550px]' : 'max-h-[75vh]'}`}> 
           <div className={`flex-1 overflow-y-auto transition-all duration-500 text-white ${expanded ? 'max-h-[450px] md:max-h-[500px] lg:max-h-[550px]' : 'max-h-[100px]'}`}> 
             <p className={`text-base sm:text-xl md:text-2xl font-semibold leading-relaxed transition-all duration-500 ${expanded ? 'slide-up' : ''}`}> 
               {current.text}
