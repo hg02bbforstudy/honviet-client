@@ -21,17 +21,16 @@ export default function FeedbackSurvey() {
 
     return (
         <div className="fixed right-0 bottom-20 z-50">
-            /* Nút FEEDBACK */
-                        {!visible && (
-                            <button
-                                onClick={() => setVisible(true)}
-                                className="bg-honvietGold text-black font-semibold px-6 py-4 text-lg rounded-l shadow-lg hover:bg-honvietGold/80 transition-all origin-right -rotate-90 fixed right-6 top-1/2 -translate-y-1/2 z-50"
-                            >
-                                <span className="italic">Feedback</span>
-                            </button>
-                        )}
+            {!visible && (
+                <button
+                    onClick={() => setVisible(true)}
+                    className="bg-honvietGold text-black font-semibold px-6 py-4 text-lg rounded-l shadow-lg hover:bg-honvietGold/80 transition-all origin-right -rotate-90 fixed right-6 top-1/2 -translate-y-1/2 z-50"
+                >
+                    <span className="italic">Feedback</span>
+                </button>
+            )}
 
-                        {/* Bảng khảo sát */}
+            {/* Bảng khảo sát */}
             <div
                 className={`bg-white shadow-lg rounded-l-xl p-4 w-[300px] fixed right-[-320px] bottom-20 transition-all duration-500 ${visible ? 'translate-x-[-320px] opacity-100' : 'translate-x-0 opacity-0 pointer-events-none'}`}
             >
@@ -51,8 +50,8 @@ export default function FeedbackSurvey() {
                             key={i}
                             onClick={() => setScore(i)}
                             className={`w-6 h-6 rounded-full text-sm font-semibold flex items-center justify-center ${score === i
-                                    ? 'bg-honvietRed text-white'
-                                    : 'bg-gray-200 hover:bg-gray-300'
+                                ? 'bg-honvietRed text-white'
+                                : 'bg-gray-200 hover:bg-gray-300'
                                 }`}
                         >
                             {i}
