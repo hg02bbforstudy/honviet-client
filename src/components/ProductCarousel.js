@@ -1,8 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { addToCart } from '../utils/cartUtils';
+import { ChevronLeft, ChevronRight, ShoppingCart } from 'lucide-react';
+import { addToCart, getCart } from '../utils/cartUtils';
+import CartFab, { cartFabDomId } from './CartFab';
+import { useNavigate } from 'react-router-dom';
 
-const GAP = 16; // px, vì gap-4 = 1rem = 16px
+const GAP = 16;
 
 const products = [
   {
@@ -12,7 +14,7 @@ const products = [
     name: 'Combo 3 bộ board games',
     price: 449000,
   },
-  {//oke
+  {
     id: 2,
     image: 'https://res.cloudinary.com/dhhljyybq/image/upload/v1753117422/Combo_2_b%E1%BB%99_B%E1%BA%AFc_-_Trung_wojsp8.jpg',
     brand: 'Hồn Việt',
@@ -33,7 +35,7 @@ const products = [
     name: 'Combo 2 bộ miền Trung-Nam',
     price: 299000,
   },
-  {//oke
+  {
     id: 5,
     image: 'https://res.cloudinary.com/dhhljyybq/image/upload/v1753117423/1_b%E1%BB%99_mi%E1%BB%81n_B%E1%BA%AFc_jylh8i.jpg',
     brand: 'Hồn Việt',
@@ -69,19 +71,23 @@ const getVisible = (w) => (w >= 1280 ? 5 : w >= 1024 ? 4 : w >= 768 ? 3 : 2);
 export default function ProductCarousel() {
   const wrapRef = useRef(null);
   const trackRef = useRef(null);
+  const navigate = useNavigate();
 
   const [visible, setVisible] = useState(5);
   const [itemW, setItemW] = useState(0);
   const [index, setIndex] = useState(0);
-  const [isDragging, setIsDragging] = useState(false); // Thêm state này
+  const [isDragging, setIsDragging] = useState(false);
+  const [animating, setAnimating] = useState(false);
+  const [flyImage, setFlyImage] = useState(null);
+  // No local cartRef, use CartFab's DOM node
+  const flyRef = useRef(null);
 
-  /* ── Re‑calc on resize ─────────────────────────── */
   useEffect(() => {
     const handleResize = () => {
       const width = wrapRef.current?.offsetWidth || 0;
       const v = getVisible(width);
       setVisible(v);
-      setItemW((width - GAP * (v - 1)) / v); // chia đều cho đúng số visible
+      setItemW((width - GAP * (v - 1)) / v);
       setIndex((i) => Math.min(i, products.length - v));
     };
     handleResize();
@@ -89,19 +95,13 @@ export default function ProductCarousel() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  /* ── Scroll khi index đổi ──────────────────────── */
   useEffect(() => {
-    trackRef.current?.scrollTo({
-      left: index * (itemW + GAP),
-      behavior: 'smooth',
-    });
+    trackRef.current?.scrollTo({ left: index * (itemW + GAP), behavior: 'smooth' });
   }, [index, itemW]);
 
-  /* ── Nút trái/phải ─────────────────────────────── */
   const slide = (dir) =>
     setIndex((i) => Math.max(0, Math.min(i + (dir === 'left' ? -1 : 1), products.length - visible)));
 
-  /* ── Pointer drag (mouse + touch) ─────────────── */
   const drag = useRef({ start: 0, left: 0, active: false, moved: false });
 
   const onDown = (e) => {
@@ -111,8 +111,8 @@ export default function ProductCarousel() {
       active: true,
       moved: false,
     };
-    setIsDragging(true); // Bắt đầu kéo thì tắt scroll-smooth
-    e.preventDefault(); // ngăn ghost drag
+    setIsDragging(true);
+    e.preventDefault();
   };
 
   const onMove = (e) => {
@@ -126,18 +126,46 @@ export default function ProductCarousel() {
   const onUp = () => {
     if (!drag.current.active) return;
     drag.current.active = false;
-    setIsDragging(false); // Kết thúc kéo thì bật lại scroll-smooth
-    /* Snap */
+    setIsDragging(false);
     const newIdx = Math.round(trackRef.current.scrollLeft / (itemW + GAP));
     setIndex(newIdx);
   };
 
-  /* ── JSX ───────────────────────────────────────── */
+  const handleAddToCart = (e, product) => {
+    if (drag.current.moved || animating) return;
+    const imgRect = e.currentTarget.getBoundingClientRect();
+    const cartFab = document.getElementById(cartFabDomId);
+    if (!cartFab) return;
+    const cartRect = cartFab.getBoundingClientRect();
+    const deltaX = cartRect.left + cartRect.width / 2 - (imgRect.left + imgRect.width / 2);
+    const deltaY = cartRect.top + cartRect.height / 2 - (imgRect.top + imgRect.height / 2);
+    setFlyImage({
+      src: product.image,
+      top: imgRect.top,
+      left: imgRect.left,
+      width: imgRect.width,
+      height: imgRect.height,
+      deltaX,
+      deltaY,
+    });
+    addToCart(product);
+    requestAnimationFrame(() => {
+      setAnimating(true);
+      setTimeout(() => {
+        setAnimating(false);
+        setFlyImage(null);
+      }, 1000);
+    });
+  };
+
+  // No local cartCount, use CartFab
+
+  // No local cartCount, use CartFab
+
   return (
     <div ref={wrapRef} className="relative mx-auto max-w-[1580px] px-0 select-none">
       <h2 className="text-2xl font-bold text-center mt-12 mb-4">BOARD GAME</h2>
 
-      {/* Nút trái */}
       <button
         onClick={() => slide('left')}
         disabled={index === 0}
@@ -146,7 +174,6 @@ export default function ProductCarousel() {
         <ChevronLeft className="text-honvietRed" />
       </button>
 
-      {/* Track scroll */}
       <div
         ref={trackRef}
         className={`overflow-x-scroll no-scrollbar ${isDragging ? '' : 'scroll-smooth'} cursor-grab active:cursor-grabbing pb-8`}
@@ -161,32 +188,19 @@ export default function ProductCarousel() {
               key={p.id}
               className="flex-shrink-0 bg-white rounded-xl shadow hover:shadow-lg hover:translate-y-[-12px] cursor-pointer transition p-3"
               style={{ width: itemW }}
-              onPointerUp={(e) => {
-                if (!drag.current.moved) {
-                  addToCart(p);
-                }
-              }}
+              onPointerUp={(e) => handleAddToCart(e, p)}
             >
-
               <img
                 src={p.image}
                 alt={p.name}
-                draggable={false}          /* ngăn ghost khi kéo */
-                className="rounded-t-xl w-full h-[260px] object-contain select-none bg-gray-200" // tăng chiều cao ảnh
+                draggable={false}
+                className="rounded-t-xl w-full h-[260px] object-contain select-none bg-gray-200"
               />
               <div className="p-3 text-sm">
                 <div className="font-bold text-honvietRed uppercase text-xs">{p.brand}</div>
                 <div className="mt-1 font-medium line-clamp-2">{p.name}</div>
                 <div className="mt-2">
-                  <span className="text-red-600 font-bold text-base">{formatPrice(p.price)}</span>{' '}
-                  {!!p.oldPrice && (
-                    <>
-                      <span className="ml-1 line-through text-gray-400 text-sm">{formatPrice(p.oldPrice)}</span>
-                      <span className="ml-1 text-xs text-white bg-red-500 px-1.5 py-0.5 rounded">
-                        -{Math.round(((p.oldPrice - p.price) / p.oldPrice) * 100)}%
-                      </span>
-                    </>
-                  )}
+                  <span className="text-red-600 font-bold text-base">{formatPrice(p.price)}</span>
                 </div>
               </div>
             </div>
@@ -194,7 +208,6 @@ export default function ProductCarousel() {
         </div>
       </div>
 
-      {/* Nút phải */}
       <button
         onClick={() => slide('right')}
         disabled={index >= products.length - visible}
@@ -202,7 +215,27 @@ export default function ProductCarousel() {
       >
         <ChevronRight className="text-honvietRed" />
       </button>
+
+      {flyImage && (
+        <img
+          ref={flyRef}
+          src={flyImage.src}
+          className="fixed rounded-xl object-cover z-50 pointer-events-none"
+          style={{
+            top: flyImage.top,
+            left: flyImage.left,
+            width: flyImage.width/2,
+            height: flyImage.height/2,
+            transition: 'transform 1s ease-in, opacity 1s ease-in',
+            transform: animating
+              ? `translate(${flyImage.deltaX}px, ${flyImage.deltaY}px) scale(0.4)`
+              : 'none',
+            opacity: animating ? 0 : 1,
+          }}
+        />
+      )}
+
+      <CartFab />
     </div>
   );
 }
-

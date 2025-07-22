@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { addToCart } from '../utils/cartUtils';
+import { ChevronLeft, ChevronRight, ShoppingCart } from 'lucide-react';
+import { addToCart, getCart } from '../utils/cartUtils';
+import { useNavigate } from 'react-router-dom';
+import CartFab, { cartFabDomId } from './CartFab';
 
 
 const GAP = 16;
@@ -48,9 +50,15 @@ const localAccessories = [
 export default function AccessoriesSection() {
   const wrapRef = useRef(null);
   const trackRef = useRef(null);
+  // No local cartRef, use CartFab's DOM node
+  const flyRef = useRef(null);
+  const navigate = useNavigate();
   const [visible, setVisible] = useState(5);
   const [itemW, setItemW] = useState(0);
   const [index, setIndex] = useState(0);
+  const [flyImage, setFlyImage] = useState(null);
+  const [animating, setAnimating] = useState(false);
+  // No local cartCount, use CartFab
 
   const accessories = localAccessories;
 
@@ -75,6 +83,34 @@ export default function AccessoriesSection() {
   }, [index, itemW]);
 
   const showControls = accessories.length > visible;
+
+  // No local cartCount, use CartFab
+
+  const handleAddToCart = (e, item) => {
+    const imgRect = e.currentTarget.getBoundingClientRect();
+    const cartFab = document.getElementById(cartFabDomId);
+    if (!cartFab) return;
+    const cartRect = cartFab.getBoundingClientRect();
+    const deltaX = cartRect.left + cartRect.width / 2 - (imgRect.left + imgRect.width / 2);
+    const deltaY = cartRect.top + cartRect.height / 2 - (imgRect.top + imgRect.height / 2);
+    setFlyImage({
+      src: item.image,
+      top: imgRect.top,
+      left: imgRect.left,
+      width: imgRect.width,
+      height: imgRect.height,
+      deltaX,
+      deltaY,
+    });
+    addToCart(item);
+    requestAnimationFrame(() => {
+      setAnimating(true);
+      setTimeout(() => {
+        setAnimating(false);
+        setFlyImage(null);
+      }, 1000);
+    });
+  };
 
   return (
     <div ref={wrapRef} className="relative mx-auto max-w-[1280px] px-0 select-none mt-16">
@@ -101,7 +137,7 @@ export default function AccessoriesSection() {
           {accessories.map((item, idx) => (
             <div
               key={item.id + '-' + idx}
-              onClick={() => addToCart(item)}
+              onClick={(e) => handleAddToCart(e, item)}
               className="flex-shrink-0 bg-white rounded-xl shadow hover:shadow-lg hover:-translate-y-2 cursor-pointer transition-transform duration-300 overflow-hidden"
               style={{ width: itemW }}
             >
@@ -126,15 +162,26 @@ export default function AccessoriesSection() {
         </div>
       </div>
 
-      {showControls && (
-        <button
-          onClick={() => setIndex((i) => Math.min(i + 1, accessories.length - visible))}
-          disabled={index >= accessories.length - visible}
-          className="absolute right-0 top-1/2 -translate-y-1/2 z-10 p-2 bg-white/80 rounded-full shadow disabled:opacity-30"
-        >
-          <ChevronRight className="text-honvietRed" />
-        </button>
+      {flyImage && (
+        <img
+          ref={flyRef}
+          src={flyImage.src}
+          className="fixed rounded-xl object-cover z-50 pointer-events-none"
+          style={{
+            top: flyImage.top,
+            left: flyImage.left,
+            width: flyImage.width / 2,
+            height: flyImage.height / 2,
+            transition: 'transform 1s ease-in, opacity 1s ease-in',
+            transform: animating
+              ? `translate(${flyImage.deltaX}px, ${flyImage.deltaY}px) scale(0.4)`
+              : 'none',
+            opacity: animating ? 0 : 1,
+          }}
+        />
       )}
+
+      <CartFab />
     </div>
   );
 }
