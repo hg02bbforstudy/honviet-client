@@ -9,9 +9,17 @@ import { useNavigate } from "react-router-dom";
 import emailjs from '@emailjs/browser';
 
 export default function CartPage() {
+    // ...existing code...
+    const handleCloseOrderForm = () => {
+        setShowOrderForm(false);
+    };
     const [cartItems, setCartItems] = useState([]);
     const [showTopBar, setShowTopBar] = useState(true);
     const [user, setUser] = useState(null);
+    const [showLoginAlert, setShowLoginAlert] = useState(false);
+    const [showOrderForm, setShowOrderForm] = useState(false);
+    const [orderInfo, setOrderInfo] = useState({ name: '', phone: '', address: '' });
+    const [orderError, setOrderError] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -43,11 +51,185 @@ export default function CartPage() {
     };
 
     const handleCheckout = async () => {
+        if (!user) {
+            setShowLoginAlert(true);
+            setShowOrderForm(false);
+
+            return;
+        }
+        setShowLoginAlert(false);
+        // Tự động điền tên/email nếu có user
+        setOrderInfo(info => ({
+            ...info,
+            name: user?.name || '',
+            email: user?.email || ''
+        }));
+        setShowOrderForm(true);
     };
+
     const total = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
     return (
         <div className="min-h-screen bg-white">
+            {/* Popup xác nhận đơn hàng */}
+            {showOrderForm && (
+                <div
+                    className="fixed inset-0 z-50 flex items-center justify-center bg-black/40"
+                    onClick={handleCloseOrderForm}
+                >
+                    <div
+                        className="relative bg-white border border-honvietGold rounded shadow-lg max-w-md w-full p-6"
+                        onClick={e => e.stopPropagation()}
+                    >
+                        <button
+                            className="absolute top-2 right-2 text-gray-500 hover:text-honvietRed text-xl font-bold"
+                            onClick={handleCloseOrderForm}
+                            aria-label="Đóng"
+                        >
+                            ×
+                        </button>
+                        <h3 className="text-lg font-bold mb-2 text-honvietRed text-center">Xác nhận thông tin đơn hàng</h3>
+                        <div className="mb-2">
+                            <input
+                                type="text"
+                                placeholder="Họ và tên người nhận"
+                                className="w-full border px-3 py-2 rounded mb-2"
+                                value={orderInfo.name}
+                                onChange={e => setOrderInfo({ ...orderInfo, name: e.target.value })}
+                            />
+                            <input
+                                type="email"
+                                placeholder="Email liên hệ"
+                                className="w-full border px-3 py-2 rounded mb-2"
+                                value={orderInfo.email}
+                                onChange={e => setOrderInfo({ ...orderInfo, email: e.target.value })}
+                            />
+                            <input
+                                type="tel"
+                                placeholder="Số điện thoại liên hệ"
+                                className="w-full border px-3 py-2 rounded mb-2"
+                                value={orderInfo.phone}
+                                onChange={e => setOrderInfo({ ...orderInfo, phone: e.target.value })}
+                            />
+                            <input
+                                type="text"
+                                placeholder="Địa chỉ nhận hàng"
+                                className="w-full border px-3 py-2 rounded mb-2"
+                                value={orderInfo.address}
+                                onChange={e => setOrderInfo({ ...orderInfo, address: e.target.value })}
+                            />
+                            {orderError && <div className="text-red-500 mb-2">{orderError}</div>}
+                            <button
+                                className="bg-honvietRed text-white px-6 py-2 rounded font-semibold shadow hover:bg-honvietRed/80 w-full"
+                                aria-label="Xác nhận đặt hàng"
+                                onClick={async () => {
+                                    if (!orderInfo.name || !orderInfo.email || !orderInfo.phone || !orderInfo.address) {
+                                        setOrderError('Vui lòng nhập đầy đủ thông tin!');
+                                        return;
+                                    }
+                                    // Debug: log email trước khi gửi
+                                    console.log('Email gửi:', orderInfo.email);
+                                    if (!orderInfo.email || orderInfo.email.trim() === '') {
+                                        setOrderError('Email không hợp lệ!');
+                                        return;
+                                    }
+                                    // Tạo HTML email
+                                    const qrCodeUrl = encodeURI('https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://honviet.vn/order/demo');
+                                    const itemsHtml = cartItems.map(item => `
+                                            <tr>
+                                              <td style="text-align:center;">${item.id || ''}</td>
+                                              <td style="text-align:center;">
+                                                <img src="${item.image}" alt="${item.name}" style="width:48px;height:48px;object-fit:cover;background:#f3f4f6;border-radius:8px;" />
+                                              </td>
+                                              <td style="text-align:center;">${item.name}</td>
+                                              <td style="text-align:center;">${item.quantity}</td>
+                                              <td style="text-align:center;">${item.price.toLocaleString()}₫</td>
+                                            </tr>
+                                        `).join('');
+                                    const htmlContent = `
+                                        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; background: #fff; border-radius: 12px; box-shadow: 0 2px 8px #0001; padding: 16px;">
+                                            <div style="text-align:center; margin-bottom:16px;">
+                                                <img src='https://res.cloudinary.com/dhhljyybq/image/upload/v1752597473/Avatar_2_h5gtk9.png' alt='Hồn Việt Logo' style='width:64px;height:64px;border-radius:12px;margin-bottom:8px;' />
+                                                <h2 style="color:#b91c1c; font-size:1.5rem; margin:0;">Xác nhận đơn hàng</h2>
+                                            </div>
+                                            <div style="background:#f3f4f6; border-radius:8px; padding:12px; margin-bottom:16px;">
+                                                <h3 style="margin:0 0 8px 0; font-size:1.1rem; color:#b91c1c;">Thông tin khách hàng</h3>
+                                                <p style="margin:4px 0;"><strong>Tên:</strong> ${orderInfo.name}</p>
+                                                <p style="margin:4px 0;"><strong>SĐT:</strong> ${orderInfo.phone}</p>
+                                                <p style="margin:4px 0;"><strong>Địa chỉ:</strong> ${orderInfo.address}</p>
+                                            </div>
+                                            <div style="text-align: center; margin: 20px 0;">
+                                                <img src="${qrCodeUrl}" alt="QR Code" width="120" height="120" style="border-radius:8px;" />
+                                            </div>
+                                            <h3 style="margin:0 0 8px 0; font-size:1.1rem; color:#b91c1c;">Thông tin sản phẩm</h3>
+                                            <div style="overflow-x:auto;">
+                                                <table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; min-width:400px; width:100%; font-size:0.95rem;">
+                                                    <thead style="background:#f3f4f6;">
+                                                        <tr>
+                                                            <th style="padding:6px;">Mã SP</th>
+                                                            <th style="padding:6px;">Hình ảnh</th>
+                                                            <th style="padding:6px;">Tên SP</th>
+                                                            <th style="padding:6px;">Số lượng</th>
+                                                            <th style="padding:6px;">Giá tiền</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        ${itemsHtml}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div style="margin-top:16px;">
+                                                <p style="margin:4px 0;"><strong>Thành tiền:</strong> ${total.toLocaleString()}₫</p>
+                                                <p style="margin:4px 0;"><strong>Phí ship:</strong> 30,000₫</p>
+                                                <p style="margin:4px 0;"><strong>Discount:</strong> -0₫</p>
+                                                <h3 style="color:#b91c1c; margin:8px 0 0 0;">TỔNG: ${(total + 30000).toLocaleString()}₫</h3>
+                                            </div>
+                                            <p style="margin-top: 24px; color:#b91c1c; font-weight:bold; font-size:1.1rem; text-align:center;">Cảm ơn bạn đã mua hàng tại Hồn Việt!</p>
+                                            <style>
+                                                @media only screen and (max-width: 480px) {
+                                                    div[style*='max-width: 600px'] { padding:8px !important; }
+                                                    table { font-size:0.85rem !important; }
+                                                    img[alt='Hồn Việt Logo'] { width:48px !important; height:48px !important; }
+                                                    img[alt='QR Code'] { width:90px !important; height:90px !important; }
+                                                }
+                                            </style>
+                                        </div>
+                                    `;
+                                    // Gửi email qua emailjs
+                                    // order_time là ngày giờ hiện tại theo 1 dãy số ví dụ: 20231001T120000
+                                    const order_time = new Date().toISOString().replace(/[-:.]/g, '').slice(0, 15);
+                                    emailjs.send('service_bu0hrw9', 'template_2cwcchp', {
+                                        to_email: orderInfo.email,
+                                        html_content: htmlContent,
+                                        order_time: order_time,
+                                        customer_name: orderInfo.name,
+                                    }, 'EXD0j4WTnajToEd4D')
+                                        .then(() => {
+                                            alert('Đơn hàng đã được gửi thành công!');
+                                            handleClearCart();
+                                            setShowOrderForm(false);
+                                        })
+                                        .catch(err => {
+                                            console.error('Error sending order:', err);
+                                            setOrderError('Gửi đơn hàng thất bại, vui lòng thử lại sau.');
+                                        });
+                                    // Reset order info
+                                    setOrderInfo({ name: '', phone: '', address: '' });
+                                    setShowOrderForm(false);
+                                }}
+                            >
+                                Xác nhận đặt hàng
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+            {/* Alert nếu chưa đăng nhập và ấn thanh toán */}
+            {showLoginAlert && (
+                <div className="max-w-4xl mx-auto mt-4 mb-2 p-3 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-900 font-semibold text-center rounded">
+                    Vui lòng đăng nhập để thanh toán đơn hàng!
+                </div>
+            )}
             {/* Hàng 1 – Dòng đỏ */}
             <div
                 className={`bg-honvietRed text-white text-sm font-semibold transition-all duration-300 ease-in-out flex items-center justify-center ${showTopBar ? 'h-8 opacity-100' : 'h-0 opacity-0 overflow-hidden'}`}
@@ -148,7 +330,6 @@ export default function CartPage() {
                                 </tbody>
                             </table>
                         </div>
-
                         <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
                             <button
                                 className="px-4 py-2 bg-honvietRed text-white rounded font-semibold shadow hover:bg-honvietRed/80"
@@ -161,7 +342,7 @@ export default function CartPage() {
                             </div>
                             <button
                                 className="px-6 py-2 bg-honvietGold text-black rounded font-semibold shadow hover:bg-honvietGold/80"
-                            onClick={handleCheckout}
+                                onClick={handleCheckout}
                             >
                                 Thanh toán
                             </button>
@@ -169,6 +350,6 @@ export default function CartPage() {
                     </>
                 )}
             </div>
-        </div>
+        </div >
     );
 }
