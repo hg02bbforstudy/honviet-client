@@ -8,6 +8,7 @@ import {
   updateCartItemQuantity,
 } from "../utils/cartUtils";
 import { useNavigate } from "react-router-dom";
+import Footer from '../components/Footer';
 const productDescriptions = {
   1: {
     name: 'Combo 3 bộ board games',
@@ -85,6 +86,9 @@ Miền Nam – nơi của những dòng sông hiền hòa, tiếng rao ngọt ng
 };
 
 export default function ProductPage() {
+  React.useEffect(() => {
+    window.scrollTo({ top: 0 });
+  });
   const { id } = useParams();
   const productId = Number(id);
   let product = products.find((p) => p.id === productId);
@@ -278,6 +282,7 @@ export default function ProductPage() {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

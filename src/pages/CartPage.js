@@ -7,8 +7,12 @@ import {
 } from "../utils/cartUtils";
 import { useNavigate } from "react-router-dom";
 import emailjs from '@emailjs/browser';
+import Footer from "../components/Footer";
 
 export default function CartPage() {
+    React.useEffect(() => {
+        window.scrollTo({ top: 0 });
+    });
     // ...existing code...
     const handleCloseOrderForm = () => {
         setShowOrderForm(false);
@@ -70,7 +74,7 @@ export default function CartPage() {
     const total = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
     return (
-        <div className="min-h-screen bg-white">
+        <div className="min-h-screen bg-white flex flex-col">
             {/* Popup xác nhận đơn hàng */}
             {showOrderForm && (
                 <div
@@ -262,7 +266,10 @@ export default function CartPage() {
             </div>
 
             {/* Nội dung giỏ hàng */}
-            <div className="px-2 py-4 sm:p-6 max-w-4xl mx-auto">
+            <div
+                className="px-2 py-4 sm:p-6 max-w-4xl mx-auto flex-1"
+                style={{ minHeight: 'calc(100vh - 64px - 80px)' }} // header ~64px, footer ~80px
+            >
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-2">
                     <h2 className="text-2xl font-bold text-honvietRed">🛒 Giỏ hàng</h2>
                     <button
@@ -350,6 +357,7 @@ export default function CartPage() {
                     </>
                 )}
             </div>
+            <Footer />
         </div >
     );
 }
