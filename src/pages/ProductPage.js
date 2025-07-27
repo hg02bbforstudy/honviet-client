@@ -86,11 +86,11 @@ Miền Nam – nơi của những dòng sông hiền hòa, tiếng rao ngọt ng
 };
 
 export default function ProductPage() {
-  React.useEffect(() => {
-    window.scrollTo({ top: 0 });
-  });
   const { id } = useParams();
   const productId = Number(id);
+  React.useEffect(() => {
+    window.scrollTo({ top: 0 });
+  }, [productId]);
   let product = products.find((p) => p.id === productId);
   if (!product) {
     product = localAccessories.find((a) => a.id === productId);
@@ -98,6 +98,7 @@ export default function ProductPage() {
   const images = Array.isArray(product?.image) ? product.image : [product?.image];
   const [selectedImg, setSelectedImg] = useState(images[0]);
   const desc = productDescriptions[productId];
+  const [showFullDesc, setShowFullDesc] = useState(false);
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [quantity, setQuantity] = useState(1);
@@ -242,7 +243,25 @@ export default function ProductPage() {
           <div className="bg-white rounded-2xl shadow-xl p-4 md:p-8">
             <h2 className="text-2xl font-bold  mb-2">{product.name}</h2>
             <div className="text-xl font-bold text-honvietGold mb-2">{product.price.toLocaleString()}₫</div>
-            <div className="text-gray-700 mb-4 whitespace-pre-line text-sm">{desc?.description || 'Mô tả sản phẩm đang cập nhật.'}</div>
+            <div className="text-gray-700 mb-4 whitespace-pre-line text-sm">
+              {desc?.description ? (
+                desc.description.length > 400 ? (
+                  <>
+                    {showFullDesc
+                      ? desc.description
+                      : desc.description.slice(0, 400) + '...'}
+                    <button
+                      className="ml-2 text-honvietRed underline text-xs font-semibold cursor-pointer"
+                      onClick={() => setShowFullDesc(!showFullDesc)}
+                    >
+                      {showFullDesc ? 'Thu gọn' : 'Xem thêm'}
+                    </button>
+                  </>
+                ) : (
+                  desc.description
+                )
+              ) : 'Mô tả sản phẩm đang cập nhật.'}
+            </div>
             <div className="flex items-center gap-2 mb-4">
               <span className="font-semibold">Số lượng:</span>
               <input type="number" min={1} value={quantity} onChange={e => setQuantity(Math.max(1, Number(e.target.value)))} className="w-16 border rounded p-1 text-center" />
