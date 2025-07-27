@@ -6,9 +6,9 @@ export default function NotFoundPage() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-honvietRed/80 to-yellow-100">
       <img
-        src="https://res.cloudinary.com/dhhljyybq/image/upload/v1753117423/1_b%E1%BB%99_mi%E1%BB%81n_B%E1%BA%AFc_jylh8i.jpg"
+        src="https://res.cloudinary.com/dhhljyybq/image/upload/v1752597473/Avatar_2_h5gtk9.png"
         alt="404 Hồn Việt"
-        className="w-40 h-40 object-contain mb-6 drop-shadow-xl animate-bounce"
+        className="w-40 h-40 object-contain mb-6 drop-shadow-xl animate-pulse rounded-full"
       />
       <h1 className="text-4xl font-bold text-honvietRed mb-2">404 - Không tìm thấy trang</h1>
       <p className="text-lg text-gray-700 mb-6 text-center max-w-md">

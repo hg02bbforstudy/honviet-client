@@ -139,7 +139,7 @@ export default function CartPage() {
                                             <tr>
                                               <td style="text-align:center;">${item.id || ''}</td>
                                               <td style="text-align:center;">
-                                                <img src="${item.image}" alt="${item.name}" style="width:48px;height:48px;object-fit:cover;background:#f3f4f6;border-radius:8px;" />
+                                                <img src="${item.image[0]}" alt="${item.name}" style="width:48px;height:48px;object-fit:cover;background:#f3f4f6;border-radius:8px;" />
                                               </td>
                                               <td style="text-align:center;">${item.name}</td>
                                               <td style="text-align:center;">${item.quantity}</td>
@@ -300,7 +300,7 @@ export default function CartPage() {
                                     {cartItems.map((item) => (
                                         <tr key={item.id} className="border-b">
                                             <td className="p-2 flex items-center gap-3 min-w-[120px]">
-                                                <img src={item.image} alt={item.name} className="w-12 h-12 object-cover rounded" />
+                                                <img src={item.image[0]} alt={item.name} className="w-12 h-12 object-cover rounded" />
                                                 <div>
                                                     <div className="font-medium text-base text-honvietRed line-clamp-2">{item.name}</div>
                                                     <div className="text-xs text-gray-500">{item.brand}</div>

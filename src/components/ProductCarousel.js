@@ -1,64 +1,64 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { ChevronLeft, ChevronRight, ShoppingCart } from 'lucide-react';
-import { addToCart, getCart } from '../utils/cartUtils';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { addToCart } from '../utils/cartUtils';
 import CartFab, { cartFabDomId } from './CartFab';
 import { useNavigate } from 'react-router-dom';
 
 const GAP = 16;
 
-const products = [
+export const products = [
   {
     id: 1,
-    image: 'https://res.cloudinary.com/dhhljyybq/image/upload/v1753117424/combo_2_b%E1%BB%99_B%E1%BA%AFc-Trung_1_v0cbqu.jpg',
+    image: ['https://res.cloudinary.com/dhhljyybq/image/upload/v1753117424/combo_2_b%E1%BB%99_B%E1%BA%AFc-Trung_1_v0cbqu.jpg'],
     brand: 'Hồn Việt',
     name: 'Combo 3 bộ board games',
     price: 449000,
   },
   {
     id: 2,
-    image: 'https://res.cloudinary.com/dhhljyybq/image/upload/v1753117422/Combo_2_b%E1%BB%99_B%E1%BA%AFc_-_Trung_wojsp8.jpg',
+    image: ['https://res.cloudinary.com/dhhljyybq/image/upload/v1753117422/Combo_2_b%E1%BB%99_B%E1%BA%AFc_-_Trung_wojsp8.jpg','https://res.cloudinary.com/dhhljyybq/image/upload/v1753117422/Combo_2_b%E1%BB%99_B%E1%BA%AFc-Trung_rx8pif.jpg','https://res.cloudinary.com/dhhljyybq/image/upload/v1753117424/combo_2_b%E1%BB%99_B%E1%BA%AFc-Trung_1_v0cbqu.jpg'],
     brand: 'Hồn Việt',
     name: 'Combo 2 bộ miền Bắc-Trung',
     price: 299000,
   },
   {
     id: 3,
-    image: 'https://res.cloudinary.com/dhhljyybq/image/upload/v1753117424/combo_2_b%E1%BB%99_B%E1%BA%AFc-Trung_1_v0cbqu.jpg',
+    image: ['https://res.cloudinary.com/dhhljyybq/image/upload/v1753117424/combo_2_b%E1%BB%99_B%E1%BA%AFc-Trung_1_v0cbqu.jpg'],
     brand: 'Hồn Việt',
     name: 'Combo 2 bộ miền Bắc-Nam',
     price: 299000,
   },
   {
     id: 4,
-    image: 'https://res.cloudinary.com/dhhljyybq/image/upload/v1753117422/Combo_2_b%E1%BB%99_B%E1%BA%AFc_-_Trung_wojsp8.jpg',
+    image: ['https://res.cloudinary.com/dhhljyybq/image/upload/v1753117422/Combo_2_b%E1%BB%99_B%E1%BA%AFc_-_Trung_wojsp8.jpg'],
     brand: 'Hồn Việt',
     name: 'Combo 2 bộ miền Trung-Nam',
     price: 299000,
   },
   {
     id: 5,
-    image: 'https://res.cloudinary.com/dhhljyybq/image/upload/v1753117423/1_b%E1%BB%99_mi%E1%BB%81n_B%E1%BA%AFc_jylh8i.jpg',
+    image: ['https://res.cloudinary.com/dhhljyybq/image/upload/v1753117423/1_b%E1%BB%99_mi%E1%BB%81n_B%E1%BA%AFc_jylh8i.jpg'],
     brand: 'Hồn Việt',
     name: 'Bộ board game miền Bắc',
     price: 169000,
   },
   {
     id: 6,
-    image: 'https://res.cloudinary.com/dhhljyybq/image/upload/v1753117422/Combo_2_b%E1%BB%99_B%E1%BA%AFc_-_Trung_wojsp8.jpg',
+    image: ['https://res.cloudinary.com/dhhljyybq/image/upload/v1753117422/Combo_2_b%E1%BB%99_B%E1%BA%AFc_-_Trung_wojsp8.jpg'],
     brand: 'Hồn Việt',
     name: 'Bộ board game miền Trung',
     price: 169000,
   },
   {
     id: 7,
-    image: 'https://res.cloudinary.com/dhhljyybq/image/upload/v1753117424/combo_2_b%E1%BB%99_B%E1%BA%AFc-Trung_1_v0cbqu.jpg',
+    image: ['https://res.cloudinary.com/dhhljyybq/image/upload/v1753117424/combo_2_b%E1%BB%99_B%E1%BA%AFc-Trung_1_v0cbqu.jpg'],
     brand: 'Hồn Việt',
     name: 'Bộ board game miền Nam',
     price: 169000,
   },
   {
     id: 8,
-    image: 'https://res.cloudinary.com/dhhljyybq/image/upload/v1753117422/Combo_2_b%E1%BB%99_B%E1%BA%AFc_-_Trung_wojsp8.jpg',
+    image: ['https://res.cloudinary.com/dhhljyybq/image/upload/v1753117422/Combo_2_b%E1%BB%99_B%E1%BA%AFc_-_Trung_wojsp8.jpg'],
     brand: 'Hồn Việt',
     name: 'Bộ quà tặng cao cấp',
     price: 899000,
@@ -189,10 +189,11 @@ export default function ProductCarousel() {
               key={p.id}
               className="flex-shrink-0 bg-white rounded-xl shadow hover:shadow-lg hover:translate-y-[-12px] cursor-pointer transition p-3"
               style={{ width: itemW }}
-              onPointerUp={(e) => handleAddToCart(e, p)}
+              // onPointerUp={(e) => handleAddToCart(e, p)}
+              onClick={() => navigate(`/product/${p.id}`)}
             >
               <img
-                src={p.image}
+                src={p.image[0]}
                 alt={p.name}
                 draggable={false}
                 className="rounded-t-xl w-full h-[260px] object-contain select-none bg-gray-200"

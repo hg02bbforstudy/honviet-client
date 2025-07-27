@@ -9,42 +9,42 @@ const GAP = 16;
 const formatPrice = (price) => price.toLocaleString('vi-VN') + '₫';
 const getVisible = (w) => (w >= 1280 ? 5 : w >= 1024 ? 4 : w >= 768 ? 3 : 2);
 
-const localAccessories = [
+export const localAccessories = [
   {
     id: 101,
-    image: 'https://res.cloudinary.com/dhhljyybq/image/upload/v1753117421/STICKER_2_isogws.png',
+    image: ['https://res.cloudinary.com/dhhljyybq/image/upload/v1753117421/STICKER_2_isogws.png'],
     name: 'Túi Tote',
     price: 60000,
     brand: 'Hồn Việt',
-    },
-    {
+  },
+  {
     id: 102,
-    image: 'https://res.cloudinary.com/dhhljyybq/image/upload/v1753117422/STICKER_1_swe1jc.png',
+    image: ['https://res.cloudinary.com/dhhljyybq/image/upload/v1753117422/STICKER_1_swe1jc.png'],
     name: 'Cốc sứ',
     price: 65000,
     brand: 'Hồn Việt',
-    },
-    {
+  },
+  {
     id: 103,
-    image: 'https://res.cloudinary.com/dhhljyybq/image/upload/v1753117421/STICKER_2_isogws.png',
+    image: ['https://res.cloudinary.com/dhhljyybq/image/upload/v1753117421/STICKER_2_isogws.png'],
     name: 'Mũ lưỡi trai',
     price: 70000,
     brand: 'Hồn Việt',
-    },
-    {
+  },
+  {
     id: 104,
-    image: 'https://res.cloudinary.com/dhhljyybq/image/upload/v1753117422/STICKER_1_swe1jc.png',
+    image: ['https://res.cloudinary.com/dhhljyybq/image/upload/v1753117422/STICKER_1_swe1jc.png'],
     name: 'Quạt cầm tay',
     price: 50000,
     brand: 'Hồn Việt',
-    },
-    {//oke
+  },
+  {//oke
     id: 105,
-    image: 'https://res.cloudinary.com/dhhljyybq/image/upload/v1753117422/STICKER_dyzzii.png',
+    image: ['https://res.cloudinary.com/dhhljyybq/image/upload/v1753117422/STICKER_dyzzii.png', 'https://res.cloudinary.com/dhhljyybq/image/upload/v1753117421/STICKER_2_isogws.png', 'https://res.cloudinary.com/dhhljyybq/image/upload/v1753117422/STICKER_1_swe1jc.png'],
     name: 'Sticker chủ đề Văn hóa',
     price: 10000,
     brand: 'Hồn Việt',
-    }
+  }
 ];
 
 export default function AccessoriesSection() {
@@ -94,7 +94,7 @@ export default function AccessoriesSection() {
     const deltaX = cartRect.left + cartRect.width / 2 - (imgRect.left + imgRect.width / 2);
     const deltaY = cartRect.top + cartRect.height / 2 - (imgRect.top + imgRect.height / 2);
     setFlyImage({
-      src: item.image,
+      src: item.image[0],
       top: imgRect.top,
       left: imgRect.left,
       width: imgRect.width,
@@ -138,13 +138,14 @@ export default function AccessoriesSection() {
           {accessories.map((item, idx) => (
             <div
               key={item.id + '-' + idx}
-              onClick={(e) => handleAddToCart(e, item)}
+              // onClick={(e) => handleAddToCart(e, item)}
+              onClick={() => navigate(`/product/${item.id}`)}
               className="flex-shrink-0 bg-white rounded-xl shadow hover:shadow-lg hover:-translate-y-2 cursor-pointer transition-transform duration-300 overflow-hidden"
               style={{ width: itemW }}
             >
               <div className="w-full aspect-square overflow-hidden p-2">
                 <img
-                  src={item.image}
+                  src={item.image[0]}
                   alt={item.name}
                   className="w-full h-full object-cover bg-gray-200"
                 />
