@@ -19,14 +19,14 @@ export const localAccessories = [
   },
   {
     id: 102,
-    image: ['https://res.cloudinary.com/dhhljyybq/image/upload/v1753117422/STICKER_1_swe1jc.png'],
+    image: ['https://res.cloudinary.com/dhhljyybq/image/upload/v1753704385/20dba518-104a-4aaa-9cf8-444416939a14_vgrpau.jpg','https://res.cloudinary.com/dhhljyybq/image/upload/v1753704385/b53fe675-590f-4af1-866d-80a4f2367663_uo0u9f.jpg'],
     name: 'Cốc sứ',
     price: 65000,
     brand: 'Hồn Việt',
   },
   {
     id: 103,
-    image: ['https://res.cloudinary.com/dhhljyybq/image/upload/v1753117421/STICKER_2_isogws.png'],
+    image: ['https://res.cloudinary.com/dhhljyybq/image/upload/v1753703658/1_lfdlol.jpg','https://res.cloudinary.com/dhhljyybq/image/upload/v1753703658/e2304062-830a-4b2b-b272-ba4a767f3467_ogyvln.jpg' ],
     name: 'Mũ lưỡi trai',
     price: 70000,
     brand: 'Hồn Việt',

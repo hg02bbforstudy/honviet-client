@@ -138,7 +138,8 @@ export default function CartPage() {
                                         return;
                                     }
                                     // Tạo HTML email
-                                    const qrCodeUrl = encodeURI('https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://honviet.vn/order/demo');
+                                    const qrCodeUrl = encodeURI('https://res.cloudinary.com/dhhljyybq/image/upload/v1753703667/QR_lbeuzo.jpg');
+                                    const order_time = new Date().toISOString().replace(/[-:.]/g, '').slice(0, 15);
                                     const itemsHtml = cartItems.map(item => `
                                             <tr>
                                               <td style="text-align:center;">${item.id || ''}</td>
@@ -163,7 +164,10 @@ export default function CartPage() {
                                                 <p style="margin:4px 0;"><strong>Địa chỉ:</strong> ${orderInfo.address}</p>
                                             </div>
                                             <div style="text-align: center; margin: 20px 0;">
-                                                <img src="${qrCodeUrl}" alt="QR Code" width="120" height="120" style="border-radius:8px;" />
+                                                <img src="${qrCodeUrl}" alt="QR Code" width="120" height="140" style="border-radius:8px;" />
+                                                <p style="margin-top: 12px; color: #b91c1c; font-weight: bold; font-size: 1rem;">
+                                                  Vui lòng chuyển khoản và ghi nội dung là mã đơn hàng <span style="background:#f3f4f6; color:#b91c1c; padding:2px 8px; border-radius:6px; font-family:monospace;">${order_time}</span>
+                                                </p>
                                             </div>
                                             <h3 style="margin:0 0 8px 0; font-size:1.1rem; color:#b91c1c;">Thông tin sản phẩm</h3>
                                             <div style="overflow-x:auto;">
@@ -201,7 +205,7 @@ export default function CartPage() {
                                     `;
                                     // Gửi email qua emailjs
                                     // order_time là ngày giờ hiện tại theo 1 dãy số ví dụ: 20231001T120000
-                                    const order_time = new Date().toISOString().replace(/[-:.]/g, '').slice(0, 15);
+                                    
                                     emailjs.send('service_bu0hrw9', 'template_2cwcchp', {
                                         to_email: orderInfo.email,
                                         html_content: htmlContent,
@@ -209,13 +213,13 @@ export default function CartPage() {
                                         customer_name: orderInfo.name,
                                     }, 'EXD0j4WTnajToEd4D')
                                         .then(() => {
-                                            alert('Đơn hàng đã được gửi thành công!');
+                                            alert('Đơn hàng đã được đặt thành công!');
                                             handleClearCart();
                                             setShowOrderForm(false);
                                         })
                                         .catch(err => {
                                             console.error('Error sending order:', err);
-                                            setOrderError('Gửi đơn hàng thất bại, vui lòng thử lại sau.');
+                                            setOrderError('Đặt đơn hàng thất bại, vui lòng thử lại sau.');
                                         });
                                     // Reset order info
                                     setOrderInfo({ name: '', phone: '', address: '' });
