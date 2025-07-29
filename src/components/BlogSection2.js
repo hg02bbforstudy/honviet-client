@@ -95,6 +95,7 @@ export default function BlogSlider() {
     clearTimeout(timer.current);
     clearInterval(progressTimer.current);
     setProgress(0);
+    if (expanded) return; // Nếu đang mở rộng thì không tự động chuyển slide
     let start = Date.now();
     const duration = 10000;
     progressTimer.current = setInterval(() => {
@@ -108,7 +109,7 @@ export default function BlogSlider() {
       clearTimeout(timer.current);
       clearInterval(progressTimer.current);
     };
-  }, [index]);
+  }, [index, expanded]);
 
   const current = blogSlides[index];
 
@@ -121,7 +122,7 @@ export default function BlogSlider() {
       <div className="absolute inset-0 bg-black/50" />
 
       <div className="relative z-10 h-full flex items-center justify-center px-1 sm:px-2 md:px-6">
-        <div className={`w-full min-w-0 max-w-[95vw] sm:max-w-xl md:max-w-2xl p-2 sm:p-4 md:p-6 rounded-lg md:rounded-xl overflow-hidden flex flex-col justify-center transition-all duration-500 min-h-[120px] ${expanded ? 'max-h-[450px] md:max-h-[500px] lg:max-h-[550px]' : 'max-h-[75vh]'}`}> 
+        <div className={`w-full min-w-0 max-w-[95vw] sm:max-w-xl md:max-w-2xl p-2 sm:p-4 md:p-6 rounded-lg md:rounded-xl overflow-hidden flex flex-col justify-center transition-all duration-500 min-h-[120px] ${expanded ? 'max-h-[450px] md:max-h-[500px] lg:max-h-[550px]' : 'max-h-[75vh]'} bg-black/20 backdrop-blur-sm`}> 
           <div className={`flex-1 overflow-y-auto transition-all duration-500 text-white ${expanded ? 'max-h-[450px] md:max-h-[500px] lg:max-h-[550px]' : 'max-h-[100px]'}`}> 
             <p className={`text-base sm:text-xl md:text-2xl font-semibold leading-relaxed transition-all duration-500 ${expanded ? 'slide-up' : ''}`}> 
               {current.text}
@@ -165,13 +166,13 @@ export default function BlogSlider() {
       {/* Nút chuyển slide hai bên, chỉ hiện trên tablet trở lên */}
       <button
         onClick={prevSlide}
-        className="absolute left-4 top-1/2 -translate-y-1/2 z-20 p-2 bg-white/70 hover:bg-white rounded-full shadow hidden sm:block"
+        className={`absolute left-4 top-1/2 -translate-y-1/2 z-20 p-2 bg-white/70 hover:bg-white rounded-full shadow hidden sm:block ${expanded ? 'animate-pulse ring-2 ring-honvietGold' : ''}`}
       >
         <ChevronLeft className="text-honvietRed w-6 h-6" />
       </button>
       <button
         onClick={nextSlide}
-        className="absolute right-4 top-1/2 -translate-y-1/2 z-20 p-2 bg-white/70 hover:bg-white rounded-full shadow hidden sm:block"
+        className={`absolute right-4 top-1/2 -translate-y-1/2 z-20 p-2 bg-white/70 hover:bg-white rounded-full shadow hidden sm:block ${expanded ? 'animate-pulse ring-2 ring-honvietGold' : ''}`}
       >
         <ChevronRight className="text-honvietRed w-6 h-6" />
       </button>
@@ -180,13 +181,13 @@ export default function BlogSlider() {
       <div className="flex sm:hidden justify-evenly absolute bottom-6 left-1/2 -translate-x-1/2 z-20 w-full">
         <button
           onClick={prevSlide}
-          className="p-2 bg-white/70 hover:bg-white rounded-full shadow"
+          className={`p-2 bg-white/70 hover:bg-white rounded-full shadow ${expanded ? 'animate-pulse ring-2 ring-honvietGold' : ''}`}
         >
           <ChevronLeft className="text-honvietRed w-6 h-6" />
         </button>
         <button
           onClick={nextSlide}
-          className="p-2 bg-white/70 hover:bg-white rounded-full shadow"
+          className={`p-2 bg-white/70 hover:bg-white rounded-full shadow ${expanded ? 'animate-pulse ring-2 ring-honvietGold' : ''}`}
         >
           <ChevronRight className="text-honvietRed w-6 h-6" />
         </button>
