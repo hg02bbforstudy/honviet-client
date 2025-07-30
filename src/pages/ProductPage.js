@@ -118,7 +118,6 @@ export default function ProductPage() {
 
   // Thêm vào giỏ hàng
   const handleAddToCart = (e) => {
-    // Animation logic
     let cart = getCart();
     const existingIdx = cart.findIndex(item => item.id === product.id);
     if (existingIdx !== -1) {
@@ -126,11 +125,9 @@ export default function ProductPage() {
     } else {
       cart.push({ ...product, quantity });
     }
-    // Sử dụng saveCart để lưu đúng key cho user
     if (typeof window.saveCart === 'function') {
       window.saveCart(cart);
     } else {
-      // fallback nếu saveCart chưa được attach lên window
       try {
         const { saveCart } = require('../utils/cartUtils');
         saveCart(cart);
@@ -139,32 +136,37 @@ export default function ProductPage() {
       }
     }
     window.dispatchEvent(new Event('cart-updated'));
-    // Animation
-    const imgRect = imgRef.current?.getBoundingClientRect();
-    const cartFab = document.getElementById(cartFabDomId);
-    if (imgRect && cartFab) {
-      const cartRect = cartFab.getBoundingClientRect();
-      const deltaX = cartRect.left + cartRect.width / 2 - (imgRect.left + imgRect.width / 2);
-      const deltaY = cartRect.top + cartRect.height / 2 - (imgRect.top + imgRect.height / 2);
-      setFlyImage({
-        src: selectedImg,
-        top: imgRect.top,
-        left: imgRect.left,
-        width: imgRect.width,
-        height: imgRect.height,
-        deltaX,
-        deltaY,
-      });
-      setTimeout(() => {
-        setAnimating(true);
+    // Đợi CartFab xuất hiện trong DOM rồi mới chạy animation
+    const tryAnimate = (retry = 0) => {
+      const imgRect = imgRef.current?.getBoundingClientRect();
+      const cartFab = document.getElementById(cartFabDomId);
+      if (imgRect && cartFab) {
+        const cartRect = cartFab.getBoundingClientRect();
+        const deltaX = cartRect.left + cartRect.width / 2 - (imgRect.left + imgRect.width / 2);
+        const deltaY = cartRect.top + cartRect.height / 2 - (imgRect.top + imgRect.height / 2);
+        setFlyImage({
+          src: selectedImg,
+          top: imgRect.top,
+          left: imgRect.left,
+          width: imgRect.width,
+          height: imgRect.height,
+          deltaX,
+          deltaY,
+        });
         setTimeout(() => {
-          setAnimating(false);
-          setFlyImage(null);
-        }, 1000);
-      }, 10);
-    } else {
-      alert('Đã thêm vào giỏ hàng!');
-    }
+          setAnimating(true);
+          setTimeout(() => {
+            setAnimating(false);
+            setFlyImage(null);
+          }, 1000);
+        }, 10);
+      } else if (retry < 20) {
+        setTimeout(() => tryAnimate(retry + 1), 30);
+      } else {
+        alert('Đã thêm vào giỏ hàng!');
+      }
+    };
+    tryAnimate();
   };
 
   // Mua ngay: thêm vào giỏ và chuyển sang trang giỏ hàng

@@ -4,10 +4,12 @@ import { getCart } from '../utils/cartUtils';
 import { useNavigate } from 'react-router-dom';
 
 export const cartFabDomId = 'global-cart-fab';
-export default function CartFab() {
+export default function CartFab({ onShow }) {
   const cartRef = useRef(null);
   const navigate = useNavigate();
   const [cartCount, setCartCount] = useState(0);
+  const [visible, setVisible] = useState(false);
+  const hideTimer = useRef();
 
   const updateCartCount = () => {
     try {
@@ -16,17 +18,22 @@ export default function CartFab() {
     } catch {
       setCartCount(0);
     }
+    setVisible(true);
+    if (typeof onShow === 'function') onShow();
+    clearTimeout(hideTimer.current);
+    hideTimer.current = setTimeout(() => setVisible(false), 3000);
   };
 
   useEffect(() => {
-    updateCartCount();
-    window.addEventListener('storage', updateCartCount);
+    setVisible(false);
     window.addEventListener('cart-updated', updateCartCount);
     return () => {
-      window.removeEventListener('storage', updateCartCount);
       window.removeEventListener('cart-updated', updateCartCount);
+      clearTimeout(hideTimer.current);
     };
   }, []);
+
+  if (!visible) return null;
 
   return (
     <div
