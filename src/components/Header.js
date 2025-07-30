@@ -103,22 +103,23 @@ export default function Header() {
 
         {/* Hàng 3 - Desktop */}
         <div className="hidden sm:flex items-center justify-around px-4 py-3 border-t border-b border-gray-500 bg-black/30 backdrop-blur-md">
+
           <button
-            className="hover:underline px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded"
+            className="hover:underline px-4 py-2 bg-transparent rounded transition-colors duration-200 text-white font-bold"
             onClick={() => scrollToSection('section-products')}
           >
             Sản phẩm
           </button>
 
           <button
-            className="hover:underline px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded"
+            className="hover:underline px-4 py-2 bg-transparent rounded transition-colors duration-200 text-white font-bold"
             onClick={() => scrollToSection('section-accessories')}
           >
             Phụ kiện & Khác
           </button>
 
           <button
-            className="hover:underline px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded"
+            className="hover:underline px-4 py-2 bg-transparent rounded transition-colors duration-200 text-white font-bold"
             onClick={() => scrollToSection('section-blog')}
           >
             Blog
@@ -127,9 +128,9 @@ export default function Header() {
           <input
             type="text"
             placeholder="Tìm kiếm..."
-            className="px-3 py-1 border border-gray-300 rounded focus:outline-none w-48"
+            className="px-3 py-1 border border-gray-300 rounded focus:outline-none w-48 bg-transparent transition-colors duration-200"
           />
-          <button className="text-honvietRed hover:scale-110" onClick={() => navigate('/cart')}>
+          <button className="text-honvietRed hover:scale-110 bg-transparent rounded transition-colors duration-200" onClick={() => navigate('/cart')}>
             <ShoppingCart />
           </button>
         </div>
@@ -138,7 +139,7 @@ export default function Header() {
         {menuOpen && (
           <div className="sm:hidden flex flex-col gap-2 px-4 py-3 bg-white shadow-md border-t border-b border-gray-300 text-sm">
             <button
-              className="text-left px-3 py-2 bg-gray-100 rounded hover:bg-gray-200"
+              className="text-left px-3 py-2 bg-transparent rounded transition-colors duration-200 hover:underline"
               onClick={() => {
                 scrollToSection('section-products');
                 setMenuOpen(false);
@@ -147,7 +148,7 @@ export default function Header() {
               Sản phẩm
             </button>
             <button
-              className="text-left px-3 py-2 bg-gray-100 rounded hover:bg-gray-200"
+              className="text-left px-3 py-2 bg-transparent rounded transition-colors duration-200 hover:underline"
               onClick={() => {
                 scrollToSection('section-accessories');
                 setMenuOpen(false);
@@ -156,7 +157,7 @@ export default function Header() {
               Phụ kiện & Khác
             </button>
             <button
-              className="text-left px-3 py-2 bg-gray-100 rounded hover:bg-gray-200"
+              className="text-left px-3 py-2 bg-transparent rounded transition-colors duration-200 hover:underline"
               onClick={() => {
                 scrollToSection('section-blog');
                 setMenuOpen(false);
@@ -167,9 +168,9 @@ export default function Header() {
             <input
               type="text"
               placeholder="Tìm kiếm..."
-              className="px-3 py-1 border border-gray-300 rounded w-full"
+              className="px-3 py-1 border border-gray-300 rounded w-full bg-transparent transition-colors duration-200"
             />
-            <button className="text-honvietRed hover:scale-110 self-start" onClick={() => navigate('/cart')}>
+            <button className="text-honvietRed hover:scale-110 self-start bg-transparent rounded transition-colors duration-200" onClick={() => navigate('/cart')}>
               <ShoppingCart />
             </button>
             <hr />
