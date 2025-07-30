@@ -65,7 +65,7 @@ export default function Header() {
 
           <div className="hidden sm:flex gap-3 items-center">
             {user ? (
-              <span className="text-gray-800 font-semibold flex items-center h-16">Xin chào {user.name} 👋</span>
+              <span className="text-white font-bold flex items-center h-16">Xin chào {user.name} 👋</span>
             ) : (
               //không hiện gì cả
               <span className="text-gray-800 font-semibold h-16"></span>
@@ -128,7 +128,7 @@ export default function Header() {
           <input
             type="text"
             placeholder="Tìm kiếm..."
-            className="px-3 py-1 border border-gray-300 rounded focus:outline-none w-48 bg-transparent transition-colors duration-200"
+            className="px-3 py-1 border border-gray-300 rounded focus:outline-none w-48 bg-transparent transition-colors duration-200 text-white placeholder-white"
           />
           <button className="text-honvietRed hover:scale-110 bg-transparent rounded transition-colors duration-200" onClick={() => navigate('/cart')}>
             <ShoppingCart />
