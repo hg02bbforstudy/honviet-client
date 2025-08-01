@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { ChevronLeft, ChevronRight, ShoppingCart } from 'lucide-react';
 import { addToCart, getCart } from '../utils/cartUtils';
 import { useNavigate } from 'react-router-dom';
-import CartFab, { cartFabDomId } from './CartFab';
+import CartFab from './CartFab';
 
 
 const GAP = 16;
@@ -44,21 +44,23 @@ export const localAccessories = [
     name: 'Sticker chủ đề Văn hóa',
     price: 10000,
     brand: 'Hồn Việt',
+  },
+  {
+    id: 106,
+    image: ['https://res.cloudinary.com/dhhljyybq/image/upload/v1754071161/Copy_of_%C3%81O_MI%E1%BB%80N_B%E1%BA%AEC_g2di6k.png','https://res.cloudinary.com/dhhljyybq/image/upload/v1754071162/%C3%81O_TRUNG_ja1hzn.png','https://res.cloudinary.com/dhhljyybq/image/upload/v1754071162/%C3%81O_MI%E1%BB%80N_NAM_digc0y.png'],
+    name: 'Áo phông 3 miền',
+    price: 199000,
+    brand: 'Hồn Việt',
   }
 ];
 
 export default function AccessoriesSection() {
   const wrapRef = useRef(null);
   const trackRef = useRef(null);
-  // No local cartRef, use CartFab's DOM node
-  const flyRef = useRef(null);
   const navigate = useNavigate();
   const [visible, setVisible] = useState(5);
   const [itemW, setItemW] = useState(0);
   const [index, setIndex] = useState(0);
-  const [flyImage, setFlyImage] = useState(null);
-  const [animating, setAnimating] = useState(false);
-  // No local cartCount, use CartFab
 
   const accessories = localAccessories;
 
@@ -86,45 +88,28 @@ export default function AccessoriesSection() {
 
   // No local cartCount, use CartFab
 
-  const handleAddToCart = (e, item) => {
-    const imgRect = e.currentTarget.getBoundingClientRect();
-    const cartFab = document.getElementById(cartFabDomId);
-    if (!cartFab) return;
-    const cartRect = cartFab.getBoundingClientRect();
-    const deltaX = cartRect.left + cartRect.width / 2 - (imgRect.left + imgRect.width / 2);
-    const deltaY = cartRect.top + cartRect.height / 2 - (imgRect.top + imgRect.height / 2);
-    setFlyImage({
-      src: item.image[0],
-      top: imgRect.top,
-      left: imgRect.left,
-      width: imgRect.width,
-      height: imgRect.height,
-      deltaX,
-      deltaY,
-    });
-    addToCart(item);
-    window.dispatchEvent(new Event('cart-updated'));
-    requestAnimationFrame(() => {
-      setAnimating(true);
-      setTimeout(() => {
-        setAnimating(false);
-        setFlyImage(null);
-      }, 1000);
-    });
-  };
 
   return (
     <div ref={wrapRef} className="relative mx-auto max-w-[1280px] px-0 select-none mt-16">
       <h2 className="text-2xl font-bold text-center mb-6">PHỤ KIỆN & KHÁC</h2>
 
       {showControls && (
-        <button
-          onClick={() => setIndex((i) => Math.max(i - 1, 0))}
-          disabled={index === 0}
-          className="absolute left-0 top-1/2 -translate-y-1/2 z-10 py-2 bg-white/80 rounded-full shadow disabled:opacity-30"
-        >
-          <ChevronLeft className="text-honvietRed" />
-        </button>
+        <>
+          <button
+            onClick={() => setIndex((i) => Math.max(i - 1, 0))}
+            disabled={index === 0}
+            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 py-2 bg-white/80 rounded-full shadow disabled:opacity-30"
+          >
+            <ChevronLeft className="text-honvietRed" />
+          </button>
+          <button
+            onClick={() => setIndex((i) => Math.min(i + 1, accessories.length - visible))}
+            disabled={index >= accessories.length - visible}
+            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 py-2 bg-white/80 rounded-full shadow disabled:opacity-30"
+          >
+            <ChevronRight className="text-honvietRed" />
+          </button>
+        </>
       )}
 
       <div
@@ -138,7 +123,7 @@ export default function AccessoriesSection() {
           {accessories.map((item, idx) => (
             <div
               key={item.id + '-' + idx}
-              // onClick={(e) => handleAddToCart(e, item)}
+              // ...existing code...
               onClick={() => navigate(`/product/${item.id}`)}
               className="flex-shrink-0 bg-white rounded-xl shadow hover:shadow-lg hover:-translate-y-2 cursor-pointer transition-transform duration-300 overflow-hidden"
               style={{ width: itemW }}
@@ -164,26 +149,9 @@ export default function AccessoriesSection() {
         </div>
       </div>
 
-      {flyImage && (
-        <img
-          ref={flyRef}
-          src={flyImage.src}
-          className="fixed rounded-xl object-cover z-50 pointer-events-none"
-          style={{
-            top: flyImage.top,
-            left: flyImage.left,
-            width: flyImage.width / 2,
-            height: flyImage.height / 2,
-            transition: 'transform 1s ease-in, opacity 1s ease-in',
-            transform: animating
-              ? `translate(${flyImage.deltaX}px, ${flyImage.deltaY}px) scale(0.4)`
-              : 'none',
-            opacity: animating ? 0 : 1,
-          }}
-        />
-      )}
+      {/* ...existing code... */}
 
-      <CartFab />
+
     </div>
   );
 }

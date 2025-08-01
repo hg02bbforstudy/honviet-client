@@ -1,5 +1,6 @@
 
 import AutoSlider from '../components/AutoSlider';
+import CompanyIntro from '../components/CompanyIntro';
 import ProductCarousel from '../components/ProductCarousel';
 import AccessoriesSection from '../components/AccessoriesSection';
 // import BlogSection from '../components/BlogSection';
@@ -34,7 +35,9 @@ const Home = () => {
       <Header />
       {/* Body phía dưới header */}
       <div className="pt-[180px]">
+
         <AutoSlider />
+        <CompanyIntro />
 
         {/* 👇 Thêm id để scroll đến */}
         <div id="section-products" className="scroll-mt-[140px]">
