@@ -78,11 +78,11 @@ export default function ARFeedbackSurvey() {
 
                         {/* Hàng 2, Cột 1: Ảnh thẻ bài */}
                         <div className="lg:order-3 order-4 flex flex-col items-center justify-center space-y-2">
-                            <div className="border-2 border-honvietRed rounded-lg shadow-xl overflow-hidden bg-white p-1">
+                            <div className="border-2  rounded-lg shadow-xl overflow-hidden bg-white p-1">
                                 <img
                                     src="https://res.cloudinary.com/dhhljyybq/image/upload/v1754328291/AR_Ngh%E1%BB%87_Nh%C3%A2n_H%C3%A1t_B%E1%BB%99i_kwgt4x.jpg"
                                     alt="AR Experience"
-                                    className="w-72 md:w-72 lg:w-80 h-auto object-cover rounded"
+                                    className="w-72 md:w-80 lg:w-96 h-auto object-cover rounded"
                                 />
                             </div>
                             <p className="text-xs md:text-sm text-honvietRed font-bold">Thẻ bài AR</p>
