@@ -39,8 +39,8 @@ export default function ARFeedbackSurvey() {
 
     const questions = [
         { key: 'interest', text: 'Bạn có thấy hứng thú với trải nghiệm trên không ?' },
-        { key: 'purchase', text: 'Bạn có sẵn sàng mua BG được tích hợp công nghệ thực tế tăng cường không ?' },
-        { key: 'recommend', text: 'Bạn có sẵn sàng giới thiệu cho mọi người về bộ BG tích hợp công nghệ AR này không ?' }
+        { key: 'purchase', text: 'Bạn có sẵn sàng mua board game được tích hợp công nghệ thực tế tăng cường không ?' },
+        { key: 'recommend', text: 'Bạn có sẵn sàng giới thiệu cho mọi người về bộ board game tích hợp công nghệ AR này không ?' }
     ];
 
     return (
