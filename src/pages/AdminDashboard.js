@@ -20,6 +20,11 @@ const AdminDashboard = () => {
   const [pagination, setPagination] = useState({});
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [showOrderModal, setShowOrderModal] = useState(false);
+  const [autoRefresh, setAutoRefresh] = useState(true);
+  const [refreshInterval, setRefreshInterval] = useState(30); // seconds
+  const [lastUpdated, setLastUpdated] = useState(new Date());
+  const [previousOrderCount, setPreviousOrderCount] = useState(0);
+  const [soundEnabled, setSoundEnabled] = useState(true);
   const navigate = useNavigate();
 
   // Kiểm tra xem user có phải admin không
@@ -32,6 +37,33 @@ const AdminDashboard = () => {
     }
     fetchOrders();
   }, [filters, navigate]);
+
+  // Auto-refresh effect
+  useEffect(() => {
+    if (!autoRefresh) return;
+
+    const interval = setInterval(() => {
+      fetchOrders();
+    }, refreshInterval * 1000);
+
+    return () => clearInterval(interval);
+  }, [autoRefresh, refreshInterval, filters]);
+
+  // Update last updated time when orders change
+  useEffect(() => {
+    if (orders.length > 0) {
+      setLastUpdated(new Date());
+      
+      // Check for new orders and play notification sound
+      if (previousOrderCount > 0 && orders.length > previousOrderCount && soundEnabled) {
+        // Play notification sound
+        const audio = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBDaJ2fPSfC0ELYnS9N2LPAoUXrTq66pVFAxEnt/yuW0gBDWG3nOkRQ');
+        audio.play().catch(() => {}); // Ignore errors if audio fails
+      }
+      
+      setPreviousOrderCount(orders.length);
+    }
+  }, [orders, previousOrderCount, soundEnabled]);
 
   const fetchOrders = async () => {
     try {
@@ -97,6 +129,14 @@ const AdminDashboard = () => {
   const formatPrice = (price) => price.toLocaleString('vi-VN') + '₫';
   const formatDate = (dateString) => new Date(dateString).toLocaleString('vi-VN');
 
+  // Check if order is new (created within last 5 minutes)
+  const isNewOrder = (createdAt) => {
+    const orderTime = new Date(createdAt);
+    const now = new Date();
+    const diffMinutes = (now - orderTime) / (1000 * 60);
+    return diffMinutes <= 5;
+  };
+
   const getStatusBadge = (status) => {
     const statusConfig = {
       pending: { color: 'bg-yellow-100 text-yellow-800', icon: Clock, text: 'Chờ xử lý' },
@@ -142,83 +182,147 @@ const AdminDashboard = () => {
       {/* Header */}
       <div className="bg-white shadow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-6">
-            <h1 className="text-3xl font-bold text-gray-900">Quản lý đơn hàng</h1>
-            <button
-              onClick={() => navigate('/')}
-              className="px-4 py-2 bg-honvietRed text-white rounded-lg hover:bg-honvietRed/80"
-            >
-              Về trang chủ
-            </button>
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center py-4 sm:py-6 gap-4">
+            <div className="flex-1">
+              <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 flex items-center gap-2">
+                Quản lý đơn hàng
+                {autoRefresh && (
+                  <span className="inline-flex items-center gap-1">
+                    <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                    <span className="text-xs sm:text-sm font-normal text-green-600">Live</span>
+                  </span>
+                )}
+              </h1>
+              <p className="text-xs sm:text-sm text-gray-500 mt-1">
+                Cập nhật: {lastUpdated.toLocaleTimeString('vi-VN')}
+              </p>
+            </div>
+            
+            {/* Auto-refresh controls */}
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4">
+              <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs sm:text-sm">
+                <label className="flex items-center gap-1 sm:gap-2">
+                  <input
+                    type="checkbox"
+                    checked={autoRefresh}
+                    onChange={(e) => setAutoRefresh(e.target.checked)}
+                    className="rounded"
+                  />
+                  <span className="whitespace-nowrap">Tự động</span>
+                </label>
+                
+                <label className="flex items-center gap-1 sm:gap-2">
+                  <input
+                    type="checkbox"
+                    checked={soundEnabled}
+                    onChange={(e) => setSoundEnabled(e.target.checked)}
+                    className="rounded"
+                  />
+                  <span className="whitespace-nowrap">🔊</span>
+                </label>
+                
+                {autoRefresh && (
+                  <select
+                    value={refreshInterval}
+                    onChange={(e) => setRefreshInterval(Number(e.target.value))}
+                    className="text-xs sm:text-sm border rounded px-1 sm:px-2 py-1"
+                  >
+                    <option value={10}>10s</option>
+                    <option value={30}>30s</option>
+                    <option value={60}>1p</option>
+                    <option value={300}>5p</option>
+                  </select>
+                )}
+              </div>
+              
+              <div className="flex gap-2">
+                <button
+                  onClick={() => fetchOrders()}
+                  className="px-2 sm:px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700 text-xs sm:text-sm whitespace-nowrap"
+                  disabled={loading}
+                >
+                  {loading ? '⟳' : '🔄'}
+                  <span className="hidden sm:inline ml-1">Làm mới</span>
+                </button>
+                
+                <button
+                  onClick={() => navigate('/')}
+                  className="px-2 sm:px-4 py-1 sm:py-2 bg-honvietRed text-white rounded-lg hover:bg-honvietRed/80 text-xs sm:text-sm whitespace-nowrap"
+                >
+                  <span className="sm:hidden">🏠</span>
+                  <span className="hidden sm:inline">Về trang chủ</span>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8">
         {/* Thống kê */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <div className="bg-white rounded-lg shadow p-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 mb-6 sm:mb-8">
+          <div className="bg-white rounded-lg shadow p-3 sm:p-6">
             <div className="flex items-center">
               <div className="flex-shrink-0">
-                <Package className="h-8 w-8 text-honvietRed" />
+                <Package className="h-6 w-6 sm:h-8 sm:w-8 text-honvietRed" />
               </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-500">Tổng đơn hàng</p>
-                <p className="text-2xl font-semibold text-gray-900">{stats.totalOrders || 0}</p>
+              <div className="ml-2 sm:ml-4">
+                <p className="text-xs sm:text-sm font-medium text-gray-500">Tổng đơn hàng</p>
+                <p className="text-lg sm:text-2xl font-semibold text-gray-900">{stats.totalOrders || 0}</p>
               </div>
             </div>
           </div>
 
-          <div className="bg-white rounded-lg shadow p-6">
+          <div className="bg-white rounded-lg shadow p-3 sm:p-6">
             <div className="flex items-center">
               <div className="flex-shrink-0">
-                <Clock className="h-8 w-8 text-yellow-500" />
+                <Clock className="h-6 w-6 sm:h-8 sm:w-8 text-yellow-500" />
               </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-500">Chờ xử lý</p>
-                <p className="text-2xl font-semibold text-gray-900">{stats.pendingOrders || 0}</p>
+              <div className="ml-2 sm:ml-4">
+                <p className="text-xs sm:text-sm font-medium text-gray-500">Chờ xử lý</p>
+                <p className="text-lg sm:text-2xl font-semibold text-gray-900">{stats.pendingOrders || 0}</p>
               </div>
             </div>
           </div>
 
-          <div className="bg-white rounded-lg shadow p-6">
+          <div className="bg-white rounded-lg shadow p-3 sm:p-6">
             <div className="flex items-center">
               <div className="flex-shrink-0">
-                <CheckCircle className="h-8 w-8 text-green-500" />
+                <CheckCircle className="h-6 w-6 sm:h-8 sm:w-8 text-green-500" />
               </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-500">Đã giao</p>
-                <p className="text-2xl font-semibold text-gray-900">{stats.deliveredOrders || 0}</p>
+              <div className="ml-2 sm:ml-4">
+                <p className="text-xs sm:text-sm font-medium text-gray-500">Đã giao</p>
+                <p className="text-lg sm:text-2xl font-semibold text-gray-900">{stats.deliveredOrders || 0}</p>
               </div>
             </div>
           </div>
 
-          <div className="bg-white rounded-lg shadow p-6">
+          <div className="bg-white rounded-lg shadow p-3 sm:p-6">
             <div className="flex items-center">
               <div className="flex-shrink-0">
-                <div className="h-8 w-8 bg-honvietGold rounded-full flex items-center justify-center">
-                  <span className="text-white font-bold">₫</span>
+                <div className="h-6 w-6 sm:h-8 sm:w-8 bg-honvietGold rounded-full flex items-center justify-center">
+                  <span className="text-white font-bold text-xs sm:text-sm">₫</span>
                 </div>
               </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-500">Doanh thu</p>
-                <p className="text-2xl font-semibold text-gray-900">{formatPrice(stats.totalRevenue || 0)}</p>
+              <div className="ml-2 sm:ml-4">
+                <p className="text-xs sm:text-sm font-medium text-gray-500">Doanh thu</p>
+                <p className="text-sm sm:text-2xl font-semibold text-gray-900">{formatPrice(stats.totalRevenue || 0)}</p>
               </div>
             </div>
           </div>
         </div>
 
         {/* Filters */}
-        <div className="bg-white rounded-lg shadow p-6 mb-8">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div className="bg-white rounded-lg shadow p-4 sm:p-6 mb-6 sm:mb-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Tìm kiếm</label>
+              <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-2">Tìm kiếm</label>
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={16} />
                 <input
                   type="text"
-                  placeholder="Tìm theo mã đơn, tên, email..."
-                  className="pl-10 w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-honvietRed"
+                  placeholder="Tìm theo mã đơn, tên..."
+                  className="pl-10 w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-honvietRed"
                   value={filters.search}
                   onChange={(e) => setFilters({ ...filters, search: e.target.value, page: 1 })}
                 />
@@ -226,9 +330,9 @@ const AdminDashboard = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Trạng thái đơn</label>
+              <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-2">Trạng thái đơn</label>
               <select
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-honvietRed"
+                className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-honvietRed"
                 value={filters.status}
                 onChange={(e) => setFilters({ ...filters, status: e.target.value, page: 1 })}
               >
@@ -242,9 +346,9 @@ const AdminDashboard = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Thanh toán</label>
+              <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-2">Thanh toán</label>
               <select
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-honvietRed"
+                className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-honvietRed"
                 value={filters.paymentStatus}
                 onChange={(e) => setFilters({ ...filters, paymentStatus: e.target.value, page: 1 })}
               >
@@ -256,9 +360,9 @@ const AdminDashboard = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Sắp xếp</label>
+              <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-2">Sắp xếp</label>
               <select
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-honvietRed"
+                className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-honvietRed"
                 value={`${filters.sortBy}-${filters.sortOrder}`}
                 onChange={(e) => {
                   const [sortBy, sortOrder] = e.target.value.split('-');
@@ -293,7 +397,8 @@ const AdminDashboard = () => {
             </div>
           ) : (
             <>
-              <div className="overflow-x-auto">
+              {/* Desktop Table View */}
+              <div className="hidden lg:block overflow-x-auto">
                 <table className="min-w-full divide-y divide-gray-200">
                   <thead className="bg-gray-50">
                     <tr>
@@ -322,9 +427,19 @@ const AdminDashboard = () => {
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200">
                     {orders.map((order) => (
-                      <tr key={order._id} className="hover:bg-gray-50">
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-gray-900">
+                      <tr 
+                        key={order._id} 
+                        className={`hover:bg-gray-50 ${
+                          isNewOrder(order.createdAt) 
+                            ? 'bg-green-50 border-l-4 border-green-400 animate-pulse' 
+                            : ''
+                        }`}
+                      >
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-gray-900 relative">
                           {order.orderTime}
+                          {isNewOrder(order.createdAt) && (
+                            <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full animate-bounce"></span>
+                          )}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="text-sm font-medium text-gray-900">{order.customerInfo.name}</div>
@@ -357,6 +472,62 @@ const AdminDashboard = () => {
                     ))}
                   </tbody>
                 </table>
+              </div>
+
+              {/* Mobile Card View */}
+              <div className="lg:hidden space-y-4">
+                {orders.map((order) => (
+                  <div 
+                    key={order._id}
+                    className={`bg-white rounded-lg shadow p-4 border-l-4 ${
+                      isNewOrder(order.createdAt) 
+                        ? 'border-green-400 bg-green-50' 
+                        : 'border-gray-200'
+                    }`}
+                  >
+                    <div className="flex justify-between items-start mb-3">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2">
+                          <p className="text-sm font-mono font-semibold text-gray-900">
+                            {order.orderTime}
+                          </p>
+                          {isNewOrder(order.createdAt) && (
+                            <span className="w-2 h-2 bg-red-500 rounded-full animate-bounce"></span>
+                          )}
+                        </div>
+                        <p className="text-lg font-semibold text-honvietRed">
+                          {formatPrice(order.total)}
+                        </p>
+                      </div>
+                      <button
+                        onClick={() => {
+                          setSelectedOrder(order);
+                          setShowOrderModal(true);
+                        }}
+                        className="text-honvietRed hover:text-honvietRed/80 p-2"
+                      >
+                        <Eye size={20} />
+                      </button>
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <div>
+                        <p className="text-sm font-medium text-gray-900">{order.customerInfo.name}</p>
+                        <p className="text-xs text-gray-500">{order.customerInfo.email}</p>
+                        <p className="text-xs text-gray-500">{order.customerInfo.phone}</p>
+                      </div>
+                      
+                      <div className="flex flex-wrap gap-2">
+                        {getStatusBadge(order.status)}
+                        {getPaymentStatusBadge(order.paymentStatus)}
+                      </div>
+                      
+                      <p className="text-xs text-gray-500">
+                        {formatDate(order.createdAt)}
+                      </p>
+                    </div>
+                  </div>
+                ))}
               </div>
 
               {/* Pagination */}
@@ -556,6 +727,21 @@ const AdminDashboard = () => {
           </div>
         </div>
       )}
+      
+      {/* Status Footer */}
+      <div className="fixed bottom-4 right-4 bg-white rounded-lg shadow-lg p-2 sm:p-3 border max-w-xs">
+        <div className="flex items-center gap-2 text-xs sm:text-sm">
+          <div className={`w-2 h-2 rounded-full ${autoRefresh ? 'bg-green-500 animate-pulse' : 'bg-gray-400'}`}></div>
+          <span className="text-gray-600 text-xs sm:text-sm">
+            {autoRefresh ? `${refreshInterval}s` : 'Tắt auto'}
+          </span>
+        </div>
+        {orders.length > 0 && (
+          <div className="text-xs text-gray-500 mt-1">
+            {orders.filter(order => isNewOrder(order.createdAt)).length} mới
+          </div>
+        )}
+      </div>
     </div>
   );
 };
