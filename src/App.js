@@ -6,6 +6,7 @@ import LoginPage from './pages/LoginPage.js';
 import CartPage from './pages/CartPage.js';
 import NotFoundPage from './pages/NotFoundPage';
 import ProductPage from './pages/ProductPage.js';
+import AdminDashboard from './pages/AdminDashboard.js';
 
 function App() {
   // Đánh thức server onrender khi load app
@@ -35,8 +36,9 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/cart" element={<CartPage />} />
-        <Route path="*" element={<NotFoundPage />} />
         <Route path="/product/:id" element={<ProductPage />} />
+        <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Router>
   );

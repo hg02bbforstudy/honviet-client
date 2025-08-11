@@ -3,6 +3,7 @@ import { ShoppingCart, Menu, Search } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { products } from './ProductCarousel';
 import { localAccessories } from './AccessoriesSection';
+import { ADMIN_EMAILS } from '../constants';
 
 export default function Header() {
   const [showTopBar, setShowTopBar] = useState(true);
@@ -21,6 +22,9 @@ export default function Header() {
 
   // Kết hợp tất cả sản phẩm
   const allProducts = [...products, ...localAccessories];
+
+  // Kiểm tra xem user có phải admin không
+  const isAdmin = user && ADMIN_EMAILS.includes(user.email);
 
   // Hàm chuyển đổi tiếng Việt có dấu sang không dấu
   const removeVietnameseTones = (str) => {
@@ -143,6 +147,14 @@ export default function Header() {
             <button className="px-4 py-2 bg-honvietRed text-white rounded hover:opacity-90" onClick={() => navigate('/cart')}>
               Theo dõi đơn hàng
             </button>
+            {isAdmin && (
+              <button
+                onClick={() => navigate('/admin')}
+                className="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700"
+              >
+                Quản lý đơn hàng
+              </button>
+            )}
             {user ? (
               <div className="flex items-center gap-2">
                 <button
@@ -353,6 +365,17 @@ export default function Header() {
             <button className="text-left px-3 py-2 bg-honvietRed text-white rounded hover:opacity-90" onClick={() => navigate('/cart')}>
               Theo dõi đơn hàng
             </button>
+            {isAdmin && (
+              <button
+                onClick={() => {
+                  navigate('/admin');
+                  setMenuOpen(false);
+                }}
+                className="text-left px-3 py-2 bg-purple-600 text-white rounded hover:bg-purple-700"
+              >
+                Quản lý đơn hàng
+              </button>
+            )}
             {user ? (
               <button
                 onClick={handleLogout}

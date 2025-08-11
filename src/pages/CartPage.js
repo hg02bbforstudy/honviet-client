@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import emailjs from '@emailjs/browser';
 import Footer from "../components/Footer";
 import APIAddressSelector from "../components/APIAddressSelector";
+import { API_BASE } from '../constants';
 
 export default function CartPage() {
     React.useEffect(() => {
@@ -234,6 +235,9 @@ export default function CartPage() {
                                                 <p style="margin-top: 12px; color: #b91c1c; font-weight: bold; font-size: 1rem;">
                                                   Vui lòng chuyển khoản và ghi nội dung là mã đơn hàng <span style="background:#f3f4f6; color:#b91c1c; padding:2px 8px; border-radius:6px; font-family:monospace;">${order_time}</span>
                                                 </p>
+                                                <a href="https://forms.gle/7WTYUgGW5W3SY7Lc8" target="_blank" style="display: inline-block; margin-top: 12px; padding: 8px 16px; background: #b91c1c; color: white; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 0.9rem;">
+                                                  📋 Gửi bill chuyển khoản
+                                                </a>
                                             </div>
                                             <h3 style="margin:0 0 8px 0; font-size:1.1rem; color:#b91c1c;">Thông tin sản phẩm</h3>
                                             <div style="overflow-x:auto;">
@@ -276,7 +280,48 @@ export default function CartPage() {
                                     order_time: order_time,
                                     customer_name: orderInfo.name,
                                 }, 'EXD0j4WTnajToEd4D')
-                                    .then(() => {
+                                    .then(async () => {
+                                        // Sau khi gửi email thành công, lưu đơn hàng vào database
+                                        try {
+                                            const orderData = {
+                                                orderTime: order_time,
+                                                customerInfo: {
+                                                    name: orderInfo.name,
+                                                    phone: orderInfo.phone,
+                                                    email: orderInfo.email,
+                                                    address: orderInfo.address
+                                                },
+                                                items: cartItems.map(item => ({
+                                                    productId: item.id.toString(),
+                                                    name: item.name,
+                                                    brand: item.brand,
+                                                    price: item.price,
+                                                    quantity: item.quantity,
+                                                    image: item.image
+                                                })),
+                                                subtotal: total,
+                                                shippingFee: 30000,
+                                                discount: 0,
+                                                total: total + 30000
+                                            };
+
+                                            const response = await fetch(`${API_BASE}/orders`, {
+                                                method: 'POST',
+                                                headers: {
+                                                    'Content-Type': 'application/json',
+                                                },
+                                                body: JSON.stringify(orderData)
+                                            });
+
+                                            if (response.ok) {
+                                                console.log('Đơn hàng đã được lưu vào database');
+                                            } else {
+                                                console.error('Lỗi khi lưu đơn hàng:', await response.text());
+                                            }
+                                        } catch (error) {
+                                            console.error('Lỗi khi gửi đơn hàng lên server:', error);
+                                        }
+
                                         alert('Đơn hàng đã được đặt thành công!');
                                         // Reset order info và clear cart chỉ khi thành công
                                         setOrderInfo({ name: '', phone: '', email: '', address: '' });
