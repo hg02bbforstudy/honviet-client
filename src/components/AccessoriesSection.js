@@ -81,7 +81,7 @@ export const localAccessories = [
       'https://res.cloudinary.com/dhhljyybq/image/upload/v1754583091/b5fae70a-a6c2-4925-ad64-6c4a64708dc4_nrmv2a.jpg'
     ],
     name: 'Đĩa gốm',
-    price: 50000,
+    price: 179000,
     brand: 'Hồn Việt',
   },
 ];
