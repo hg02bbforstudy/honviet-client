@@ -68,7 +68,7 @@ export const localAccessories = [
       'https://res.cloudinary.com/dhhljyybq/image/upload/v1754583103/5341412b-63e7-4c35-a334-07a07981ff11_zbtxnv.jpg'
     ],
     name: 'Sticker',
-    price: 10000,
+    price: 15000,
     brand: 'Hồn Việt',
   },
   {
