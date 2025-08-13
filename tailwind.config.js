@@ -10,7 +10,12 @@ module.exports = {
         honvietRed: '#8b322f',
         honvietGold: '#eea741',
       },
-      
+      screens: {
+        'xs': '475px',
+      },
+      borderWidth: {
+        '3': '3px',
+      },
     },
   },
   plugins: [

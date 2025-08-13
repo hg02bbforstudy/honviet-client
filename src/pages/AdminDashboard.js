@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { API_BASE, ADMIN_EMAILS } from '../constants';
 import { Search, Filter, Eye, Edit, Trash2, Package, Clock, CheckCircle, Truck, XCircle } from 'lucide-react';
+import FeedbackChart from '../components/FeedbackChart';
+import TrendChart from '../components/TrendChart';
 
 const AdminDashboard = () => {
   const [orders, setOrders] = useState([]);
@@ -408,104 +410,53 @@ const AdminDashboard = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8">
         {/* Stats cho Orders */}
         {activeTab === 'orders' && (
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 mb-6 sm:mb-8">
-            <div className="bg-white rounded-lg shadow p-3 sm:p-6">
+          <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4 lg:gap-6 mb-4 sm:mb-6 lg:mb-8">
+            <div className="bg-white rounded-lg shadow p-3 sm:p-4 lg:p-6">
               <div className="flex items-center">
                 <div className="flex-shrink-0">
-                  <Package className="h-6 w-6 sm:h-8 sm:w-8 text-honvietRed" />
+                  <Package className="h-5 w-5 sm:h-6 sm:w-6 lg:h-8 lg:w-8 text-honvietRed" />
                 </div>
-                <div className="ml-2 sm:ml-4">
-                  <p className="text-xs sm:text-sm font-medium text-gray-500">Tổng đơn hàng</p>
-                  <p className="text-lg sm:text-2xl font-semibold text-gray-900">{stats.totalOrders || 0}</p>
+                <div className="ml-2 sm:ml-3 lg:ml-4 min-w-0 flex-1">
+                  <p className="text-xs sm:text-sm font-medium text-gray-500 truncate">Tổng đơn hàng</p>
+                  <p className="text-sm sm:text-lg lg:text-2xl font-semibold text-gray-900">{stats.totalOrders || 0}</p>
                 </div>
               </div>
             </div>
             
-            <div className="bg-white rounded-lg shadow p-3 sm:p-6">
+            <div className="bg-white rounded-lg shadow p-3 sm:p-4 lg:p-6">
               <div className="flex items-center">
                 <div className="flex-shrink-0">
-                  <Clock className="h-6 w-6 sm:h-8 sm:w-8 text-yellow-500" />
+                  <Clock className="h-5 w-5 sm:h-6 sm:w-6 lg:h-8 lg:w-8 text-yellow-500" />
                 </div>
-                <div className="ml-2 sm:ml-4">
-                  <p className="text-xs sm:text-sm font-medium text-gray-500">Chờ xử lý</p>
-                  <p className="text-lg sm:text-2xl font-semibold text-gray-900">{stats.pendingOrders || 0}</p>
+                <div className="ml-2 sm:ml-3 lg:ml-4 min-w-0 flex-1">
+                  <p className="text-xs sm:text-sm font-medium text-gray-500 truncate">Chờ xử lý</p>
+                  <p className="text-sm sm:text-lg lg:text-2xl font-semibold text-gray-900">{stats.pendingOrders || 0}</p>
                 </div>
               </div>
             </div>
             
-            <div className="bg-white rounded-lg shadow p-3 sm:p-6">
+            <div className="bg-white rounded-lg shadow p-3 sm:p-4 lg:p-6">
               <div className="flex items-center">
                 <div className="flex-shrink-0">
-                  <CheckCircle className="h-6 w-6 sm:h-8 sm:w-8 text-green-500" />
+                  <CheckCircle className="h-5 w-5 sm:h-6 sm:w-6 lg:h-8 lg:w-8 text-green-500" />
                 </div>
-                <div className="ml-2 sm:ml-4">
-                  <p className="text-xs sm:text-sm font-medium text-gray-500">Đã giao</p>
-                  <p className="text-lg sm:text-2xl font-semibold text-gray-900">{stats.deliveredOrders || 0}</p>
+                <div className="ml-2 sm:ml-3 lg:ml-4 min-w-0 flex-1">
+                  <p className="text-xs sm:text-sm font-medium text-gray-500 truncate">Đã giao</p>
+                  <p className="text-sm sm:text-lg lg:text-2xl font-semibold text-gray-900">{stats.deliveredOrders || 0}</p>
                 </div>
               </div>
             </div>
             
-            <div className="bg-white rounded-lg shadow p-3 sm:p-6">
+            <div className="bg-white rounded-lg shadow p-3 sm:p-4 lg:p-6">
               <div className="flex items-center">
                 <div className="flex-shrink-0">
-                  <div className="h-6 w-6 sm:h-8 sm:w-8 bg-honvietGold rounded-full flex items-center justify-center">
-                    <span className="text-white font-bold text-xs sm:text-sm">₫</span>
+                  <div className="h-5 w-5 sm:h-6 sm:w-6 lg:h-8 lg:w-8 bg-honvietGold rounded-full flex items-center justify-center">
+                    <span className="text-white font-bold text-xs">₫</span>
                   </div>
                 </div>
-                <div className="ml-2 sm:ml-4">
-                  <p className="text-xs sm:text-sm font-medium text-gray-500">Doanh thu</p>
-                  <p className="text-sm sm:text-2xl font-semibold text-gray-900">{formatPrice(stats.totalRevenue || 0)}</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Stats cho AR Feedback */}
-        {activeTab === 'feedback' && (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-6 mb-6 sm:mb-8">
-            <div className="bg-white rounded-lg shadow p-3 sm:p-6">
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <div className="h-6 w-6 sm:h-8 sm:w-8 bg-blue-500 rounded-full flex items-center justify-center">
-                    <span className="text-white font-bold text-xs sm:text-sm">📊</span>
-                  </div>
-                </div>
-                <div className="ml-2 sm:ml-4">
-                  <p className="text-xs sm:text-sm font-medium text-gray-500">Tổng đánh giá</p>
-                  <p className="text-lg sm:text-2xl font-semibold text-gray-900">{feedbackStats.totalFeedbacks || 0}</p>
-                </div>
-              </div>
-            </div>
-            
-            <div className="bg-white rounded-lg shadow p-3 sm:p-6">
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <div className="h-6 w-6 sm:h-8 sm:w-8 bg-green-500 rounded-full flex items-center justify-center">
-                    <span className="text-white font-bold text-xs sm:text-sm">😊</span>
-                  </div>
-                </div>
-                <div className="ml-2 sm:ml-4">
-                  <p className="text-xs sm:text-sm font-medium text-gray-500">Hài lòng</p>
-                  <p className="text-lg sm:text-2xl font-semibold text-gray-900">
-                    {(feedbackStats.q1Satisfied || 0) + (feedbackStats.q1VerySatisfied || 0)}
-                  </p>
-                </div>
-              </div>
-            </div>
-            
-            <div className="bg-white rounded-lg shadow p-3 sm:p-6">
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <div className="h-6 w-6 sm:h-8 sm:w-8 bg-purple-500 rounded-full flex items-center justify-center">
-                    <span className="text-white font-bold text-xs sm:text-sm">👍</span>
-                  </div>
-                </div>
-                <div className="ml-2 sm:ml-4">
-                  <p className="text-xs sm:text-sm font-medium text-gray-500">Sẽ giới thiệu</p>
-                  <p className="text-lg sm:text-2xl font-semibold text-gray-900">
-                    {(feedbackStats.q3MaybeYes || 0) + (feedbackStats.q3DefinitelyYes || 0)}
-                  </p>
+                <div className="ml-2 sm:ml-3 lg:ml-4 min-w-0 flex-1">
+                  <p className="text-xs sm:text-sm font-medium text-gray-500 truncate">Doanh thu</p>
+                  <p className="text-xs sm:text-sm lg:text-2xl font-semibold text-gray-900 break-all">{formatPrice(stats.totalRevenue || 0)}</p>
                 </div>
               </div>
             </div>
@@ -514,16 +465,16 @@ const AdminDashboard = () => {
 
         {/* Filters */}
         {activeTab === 'orders' && (
-          <div className="bg-white rounded-lg shadow p-4 sm:p-6 mb-6 sm:mb-8">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+          <div className="bg-white rounded-lg shadow p-3 sm:p-4 lg:p-6 mb-4 sm:mb-6 lg:mb-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3 lg:gap-4">
               <div>
-                <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-2">Tìm kiếm</label>
+                <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1 sm:mb-2">Tìm kiếm</label>
                 <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={16} />
+                  <Search className="absolute left-2 sm:left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={14} />
                   <input
                     type="text"
                     placeholder="Tìm theo mã đơn, tên..."
-                    className="pl-10 w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-honvietRed"
+                    className="pl-7 sm:pl-10 w-full border border-gray-300 rounded-lg px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-honvietRed"
                     value={filters.search}
                     onChange={(e) => setFilters({ ...filters, search: e.target.value, page: 1 })}
                   />
@@ -531,9 +482,9 @@ const AdminDashboard = () => {
               </div>
 
               <div>
-                <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-2">Trạng thái đơn</label>
+                <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1 sm:mb-2">Trạng thái đơn</label>
                 <select
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-honvietRed"
+                  className="w-full border border-gray-300 rounded-lg px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-honvietRed"
                   value={filters.status}
                   onChange={(e) => setFilters({ ...filters, status: e.target.value, page: 1 })}
                 >
@@ -547,9 +498,9 @@ const AdminDashboard = () => {
               </div>
 
               <div>
-                <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-2">Thanh toán</label>
+                <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1 sm:mb-2">Thanh toán</label>
                 <select
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-honvietRed"
+                  className="w-full border border-gray-300 rounded-lg px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-honvietRed"
                   value={filters.paymentStatus}
                   onChange={(e) => setFilters({ ...filters, paymentStatus: e.target.value, page: 1 })}
                 >
@@ -561,9 +512,9 @@ const AdminDashboard = () => {
               </div>
 
               <div>
-                <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-2">Sắp xếp</label>
+                <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1 sm:mb-2">Sắp xếp</label>
                 <select
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-honvietRed"
+                  className="w-full border border-gray-300 rounded-lg px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-honvietRed"
                   value={`${filters.sortBy}-${filters.sortOrder}`}
                   onChange={(e) => {
                     const [sortBy, sortOrder] = e.target.value.split('-');
@@ -582,38 +533,46 @@ const AdminDashboard = () => {
 
         {/* Feedback Filters */}
         {activeTab === 'feedback' && (
-          <div className="bg-white rounded-lg shadow p-4 sm:p-6 mb-6 sm:mb-8">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-              <div>
-                <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-2">Tìm kiếm</label>
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={16} />
-                  <input
-                    type="text"
-                    placeholder="Tìm theo tên, email..."
-                    className="pl-10 w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-honvietRed"
-                    value={filters.search}
-                    onChange={(e) => setFilters({ ...filters, search: e.target.value, page: 1 })}
-                  />
+          <>
+            {/* Xu hướng theo thời gian */}
+            <TrendChart feedbacks={feedbacks} />
+            
+            {/* Biểu đồ thống kê chi tiết */}
+            <FeedbackChart stats={feedbackStats} />
+            
+            <div className="bg-white rounded-lg shadow p-3 sm:p-4 lg:p-6 mb-4 sm:mb-6 lg:mb-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-3 lg:gap-4">
+                <div>
+                  <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1 sm:mb-2">Tìm kiếm</label>
+                  <div className="relative">
+                    <Search className="absolute left-2 sm:left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={14} />
+                    <input
+                      type="text"
+                      placeholder="Tìm theo tên, email..."
+                      className="pl-7 sm:pl-10 w-full border border-gray-300 rounded-lg px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-honvietRed"
+                      value={filters.search}
+                      onChange={(e) => setFilters({ ...filters, search: e.target.value, page: 1 })}
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1 sm:mb-2">Sắp xếp</label>
+                  <select
+                    className="w-full border border-gray-300 rounded-lg px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-honvietRed"
+                    value={`${filters.sortBy}-${filters.sortOrder}`}
+                    onChange={(e) => {
+                      const [sortBy, sortOrder] = e.target.value.split('-');
+                      setFilters({ ...filters, sortBy, sortOrder, page: 1 });
+                    }}
+                  >
+                    <option value="createdAt-desc">Mới nhất</option>
+                    <option value="createdAt-asc">Cũ nhất</option>
+                  </select>
                 </div>
               </div>
-
-              <div>
-                <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-2">Sắp xếp</label>
-                <select
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-honvietRed"
-                  value={`${filters.sortBy}-${filters.sortOrder}`}
-                  onChange={(e) => {
-                    const [sortBy, sortOrder] = e.target.value.split('-');
-                    setFilters({ ...filters, sortBy, sortOrder, page: 1 });
-                  }}
-                >
-                  <option value="createdAt-desc">Mới nhất</option>
-                  <option value="createdAt-asc">Cũ nhất</option>
-                </select>
-              </div>
             </div>
-          </div>
+          </>
         )}
 
         {/* Content Area */}
@@ -723,59 +682,59 @@ const AdminDashboard = () => {
                   </div>
 
                   {/* Mobile Card View */}
-                  <div className="lg:hidden space-y-4 p-4">
+                  <div className="lg:hidden space-y-3 p-3 sm:p-4">
                     {orders.map((order) => (
                       <div 
                         key={order._id}
-                        className={`bg-white rounded-lg shadow p-4 border-l-4 ${
+                        className={`bg-white rounded-lg shadow p-3 sm:p-4 border-l-4 ${
                           isNewOrder(order.createdAt) 
                             ? 'border-green-400 bg-green-50' 
                             : 'border-gray-200'
                         }`}
                       >
                         <div className="flex justify-between items-start mb-3">
-                          <div className="flex-1">
+                          <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2">
-                              <p className="text-sm font-mono font-semibold text-gray-900">
+                              <p className="text-xs sm:text-sm font-mono font-semibold text-gray-900 truncate">
                                 {order.orderTime}
                               </p>
                               {isNewOrder(order.createdAt) && (
-                                <span className="w-2 h-2 bg-red-500 rounded-full animate-bounce"></span>
+                                <span className="w-2 h-2 bg-red-500 rounded-full animate-bounce flex-shrink-0"></span>
                               )}
                             </div>
-                            <p className="text-lg font-semibold text-honvietRed">
+                            <p className="text-base sm:text-lg font-semibold text-honvietRed truncate">
                               {formatPrice(order.total)}
                             </p>
                           </div>
-                          <div className="flex gap-2">
+                          <div className="flex gap-1 sm:gap-2 flex-shrink-0 ml-2">
                             <button
                               onClick={() => {
                                 setSelectedOrder(order);
                                 setShowOrderModal(true);
                               }}
-                              className="text-honvietRed hover:text-honvietRed/80 p-2"
+                              className="text-honvietRed hover:text-honvietRed/80 p-1.5 sm:p-2"
                               title="Xem chi tiết"
                             >
-                              <Eye size={20} />
+                              <Eye size={16} />
                             </button>
                             <button
                               onClick={() => handleDeleteOrder(order._id, order.orderTime)}
-                              className="text-red-600 hover:text-red-800 p-2"
+                              className="text-red-600 hover:text-red-800 p-1.5 sm:p-2"
                               title="Xóa đơn hàng"
                             >
-                              <Trash2 size={20} />
+                              <Trash2 size={16} />
                             </button>
                           </div>
                         </div>
                         
                         <div className="space-y-2">
                           <div>
-                            <p className="text-sm font-medium text-gray-900">{order.customerInfo.name}</p>
-                            <p className="text-xs text-gray-500">{order.customerInfo.email}</p>
+                            <p className="text-sm font-medium text-gray-900 truncate">{order.customerInfo.name}</p>
+                            <p className="text-xs text-gray-500 truncate">{order.customerInfo.email}</p>
                             <p className="text-xs text-gray-500">{order.customerInfo.phone}</p>
                           </div>
                           
-                          <div className="flex flex-wrap gap-2">
+                          <div className="flex flex-wrap gap-1 sm:gap-2">
                             {getStatusBadge(order.status)}
                             {getPaymentStatusBadge(order.paymentStatus)}
                           </div>
@@ -792,42 +751,54 @@ const AdminDashboard = () => {
 
               {/* Feedback Content */}
               {activeTab === 'feedback' && (
-                <div className="space-y-4 p-4">
-                  {feedbacks.map((feedback) => (
-                    <div key={feedback._id} className="bg-white rounded-lg shadow p-4 border border-gray-200">
-                      <div className="flex justify-between items-start mb-3">
-                        <div className="flex-1">
-                          <h3 className="text-lg font-semibold text-gray-900">{feedback.username}</h3>
-                          {feedback.email && (
-                            <p className="text-sm text-gray-500">{feedback.email}</p>
-                          )}
-                          <p className="text-xs text-gray-400">{formatDate(feedback.createdAt)}</p>
-                        </div>
+                <div className="p-1 xs:p-2 sm:p-3">
+                  {/* Ultra Compact Grid Layout */}
+                  <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2 xs:gap-2 sm:gap-3">
+                    {feedbacks.map((feedback) => (
+                      <div key={feedback._id} className="bg-white rounded-md border border-gray-200 p-2 hover:shadow-sm transition-shadow relative group">
+                        {/* Delete Button - Micro */}
                         <button
                           onClick={() => handleDeleteFeedback(feedback._id, feedback.username)}
-                          className="text-red-600 hover:text-red-800 p-2"
-                          title="Xóa đánh giá"
+                          className="absolute top-1 right-1 text-red-400 hover:text-red-600 p-0.5 hover:bg-red-50 rounded opacity-0 group-hover:opacity-100 transition-opacity"
+                          title="Xóa"
                         >
-                          <Trash2 size={16} />
+                          <Trash2 size={10} />
                         </button>
+                        
+                        {/* User Info - Micro */}
+                        <div className="mb-2 pr-4">
+                          <h3 className="text-xs font-semibold text-gray-900 truncate leading-tight">{feedback.username}</h3>
+                          <div className="flex items-center justify-between text-[10px] text-gray-500 mt-0.5">
+                            <span className="truncate flex-1">{new Date(feedback.createdAt).toLocaleDateString('vi-VN', {day: '2-digit', month: '2-digit'})}</span>
+                          </div>
+                        </div>
+                        
+                        {/* Feedback Micro Cards */}
+                        <div className="space-y-1">
+                          <div className="flex items-center gap-1 px-1.5 py-1 bg-blue-50 rounded-sm border-l-2 border-blue-400">
+                            <span className="text-[10px]">😊</span>
+                            <p className="text-[10px] font-medium text-blue-700 truncate flex-1" title={feedback.question1Answer}>
+                              {feedback.question1Answer}
+                            </p>
+                          </div>
+                          
+                          <div className="flex items-center gap-1 px-1.5 py-1 bg-green-50 rounded-sm border-l-2 border-green-400">
+                            <span className="text-[10px]">⚡</span>
+                            <p className="text-[10px] font-medium text-green-700 truncate flex-1" title={feedback.question2Answer}>
+                              {feedback.question2Answer}
+                            </p>
+                          </div>
+                          
+                          <div className="flex items-center gap-1 px-1.5 py-1 bg-purple-50 rounded-sm border-l-2 border-purple-400">
+                            <span className="text-[10px]">👥</span>
+                            <p className="text-[10px] font-medium text-purple-700 truncate flex-1" title={feedback.question3Answer}>
+                              {feedback.question3Answer}
+                            </p>
+                          </div>
+                        </div>
                       </div>
-                      
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div className="bg-blue-50 p-3 rounded-lg">
-                          <h4 className="text-sm font-medium text-blue-800 mb-1">Mức độ hài lòng</h4>
-                          <p className="text-sm text-blue-600">{feedback.question1Answer}</p>
-                        </div>
-                        <div className="bg-green-50 p-3 rounded-lg">
-                          <h4 className="text-sm font-medium text-green-800 mb-1">Độ dễ sử dụng</h4>
-                          <p className="text-sm text-green-600">{feedback.question2Answer}</p>
-                        </div>
-                        <div className="bg-purple-50 p-3 rounded-lg">
-                          <h4 className="text-sm font-medium text-purple-800 mb-1">Khả năng giới thiệu</h4>
-                          <p className="text-sm text-purple-600">{feedback.question3Answer}</p>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
               )}
 
@@ -892,60 +863,60 @@ const AdminDashboard = () => {
       {/* Order Detail Modal */}
       {showOrderModal && selectedOrder && (
         <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
-          <div className="relative top-20 mx-auto p-5 border w-11/12 md:w-3/4 lg:w-1/2 shadow-lg rounded-md bg-white">
+          <div className="relative top-4 sm:top-10 lg:top-20 mx-auto p-3 sm:p-5 border w-11/12 sm:w-10/12 md:w-3/4 lg:w-1/2 max-w-4xl shadow-lg rounded-md bg-white max-h-[90vh] overflow-y-auto">
             <div className="mt-3">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-medium text-gray-900">
+                <h3 className="text-base sm:text-lg font-medium text-gray-900 truncate pr-2">
                   Chi tiết đơn hàng #{selectedOrder.orderTime}
                 </h3>
                 <button
                   onClick={() => setShowOrderModal(false)}
-                  className="text-gray-400 hover:text-gray-600"
+                  className="text-gray-400 hover:text-gray-600 flex-shrink-0"
                 >
-                  <XCircle size={24} />
+                  <XCircle size={20} />
                 </button>
               </div>
 
-              <div className="space-y-4">
+              <div className="space-y-3 sm:space-y-4">
                 {/* Customer Info */}
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <h4 className="font-medium text-gray-900 mb-2">Thông tin khách hàng</h4>
-                  <div className="grid grid-cols-2 gap-4 text-sm">
+                <div className="bg-gray-50 p-3 sm:p-4 rounded-lg">
+                  <h4 className="font-medium text-gray-900 mb-2 text-sm sm:text-base">Thông tin khách hàng</h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4 text-xs sm:text-sm">
                     <div>
                       <span className="text-gray-500">Tên:</span>
-                      <span className="ml-2 font-medium">{selectedOrder.customerInfo.name}</span>
+                      <span className="ml-2 font-medium break-words">{selectedOrder.customerInfo.name}</span>
                     </div>
                     <div>
                       <span className="text-gray-500">SĐT:</span>
-                      <span className="ml-2 font-medium">{selectedOrder.customerInfo.phone}</span>
+                      <span className="ml-2 font-medium break-all">{selectedOrder.customerInfo.phone}</span>
                     </div>
-                    <div className="col-span-2">
+                    <div className="sm:col-span-2">
                       <span className="text-gray-500">Email:</span>
-                      <span className="ml-2 font-medium">{selectedOrder.customerInfo.email}</span>
+                      <span className="ml-2 font-medium break-all">{selectedOrder.customerInfo.email}</span>
                     </div>
-                    <div className="col-span-2">
+                    <div className="sm:col-span-2">
                       <span className="text-gray-500">Địa chỉ:</span>
-                      <span className="ml-2 font-medium">{selectedOrder.customerInfo.address}</span>
+                      <span className="ml-2 font-medium break-words">{selectedOrder.customerInfo.address}</span>
                     </div>
                   </div>
                 </div>
 
                 {/* Order Items */}
                 <div>
-                  <h4 className="font-medium text-gray-900 mb-2">Sản phẩm</h4>
+                  <h4 className="font-medium text-gray-900 mb-2 text-sm sm:text-base">Sản phẩm</h4>
                   <div className="space-y-2">
                     {selectedOrder.items.map((item, index) => (
-                      <div key={index} className="flex items-center space-x-3 p-2 border rounded">
+                      <div key={index} className="flex items-center space-x-2 sm:space-x-3 p-2 border rounded">
                         <img 
                           src={item.image[0]} 
                           alt={item.name}
-                          className="w-12 h-12 object-cover rounded"
+                          className="w-10 h-10 sm:w-12 sm:h-12 object-cover rounded flex-shrink-0"
                         />
-                        <div className="flex-1">
-                          <div className="text-sm font-medium">{item.name}</div>
-                          <div className="text-xs text-gray-500">{item.brand}</div>
+                        <div className="flex-1 min-w-0">
+                          <div className="text-xs sm:text-sm font-medium truncate">{item.name}</div>
+                          <div className="text-xs text-gray-500 truncate">{item.brand}</div>
                         </div>
-                        <div className="text-sm">
+                        <div className="text-xs sm:text-sm text-right flex-shrink-0">
                           <div>SL: {item.quantity}</div>
                           <div className="font-medium">{formatPrice(item.price)}</div>
                         </div>
@@ -955,9 +926,9 @@ const AdminDashboard = () => {
                 </div>
 
                 {/* Order Summary */}
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <h4 className="font-medium text-gray-900 mb-2">Tóm tắt đơn hàng</h4>
-                  <div className="space-y-1 text-sm">
+                <div className="bg-gray-50 p-3 sm:p-4 rounded-lg">
+                  <h4 className="font-medium text-gray-900 mb-2 text-sm sm:text-base">Tóm tắt đơn hàng</h4>
+                  <div className="space-y-1 text-xs sm:text-sm">
                     <div className="flex justify-between">
                       <span>Thành tiền:</span>
                       <span>{formatPrice(selectedOrder.subtotal)}</span>
@@ -970,7 +941,7 @@ const AdminDashboard = () => {
                       <span>Giảm giá:</span>
                       <span>-{formatPrice(selectedOrder.discount)}</span>
                     </div>
-                    <div className="flex justify-between font-medium text-base border-t pt-1">
+                    <div className="flex justify-between font-medium text-sm sm:text-base border-t pt-1">
                       <span>Tổng cộng:</span>
                       <span className="text-honvietRed">{formatPrice(selectedOrder.total)}</span>
                     </div>
@@ -978,15 +949,15 @@ const AdminDashboard = () => {
                 </div>
 
                 {/* Status Update */}
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <h4 className="font-medium text-gray-900 mb-2">Cập nhật trạng thái</h4>
-                  <div className="grid grid-cols-2 gap-4">
+                <div className="bg-gray-50 p-3 sm:p-4 rounded-lg">
+                  <h4 className="font-medium text-gray-900 mb-2 text-sm sm:text-base">Cập nhật trạng thái</h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                      <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">
                         Trạng thái đơn hàng
                       </label>
                       <select
-                        className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm"
+                        className="w-full border border-gray-300 rounded-md px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm"
                         value={selectedOrder.status}
                         onChange={(e) => updateOrderStatus(selectedOrder._id, e.target.value, selectedOrder.paymentStatus)}
                       >
@@ -998,11 +969,11 @@ const AdminDashboard = () => {
                       </select>
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                      <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">
                         Trạng thái thanh toán
                       </label>
                       <select
-                        className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm"
+                        className="w-full border border-gray-300 rounded-md px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm"
                         value={selectedOrder.paymentStatus}
                         onChange={(e) => updateOrderStatus(selectedOrder._id, selectedOrder.status, e.target.value)}
                       >
@@ -1015,18 +986,18 @@ const AdminDashboard = () => {
                 </div>
 
                 {/* Action Buttons */}
-                <div className="flex justify-between items-center pt-4 border-t border-gray-200">
+                <div className="flex flex-col sm:flex-row justify-between items-center pt-4 border-t border-gray-200 gap-3">
                   <button
                     onClick={() => handleDeleteOrder(selectedOrder._id, selectedOrder.orderTime)}
-                    className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 text-sm"
+                    className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 text-xs sm:text-sm w-full sm:w-auto justify-center"
                   >
-                    <Trash2 size={16} />
+                    <Trash2 size={14} />
                     Xóa đơn hàng
                   </button>
                   
                   <button
                     onClick={() => setShowOrderModal(false)}
-                    className="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 text-sm"
+                    className="px-3 sm:px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 text-xs sm:text-sm w-full sm:w-auto"
                   >
                     Đóng
                   </button>
@@ -1038,11 +1009,11 @@ const AdminDashboard = () => {
       )}
       
       {/* Status Footer */}
-      <div className="fixed bottom-4 right-4 bg-white rounded-lg shadow-lg p-2 sm:p-3 border max-w-xs">
-        <div className="flex items-center gap-2 text-xs sm:text-sm">
-          <div className={`w-2 h-2 rounded-full ${autoRefresh ? 'bg-green-500 animate-pulse' : 'bg-gray-400'}`}></div>
-          <span className="text-gray-600 text-xs sm:text-sm">
-            {autoRefresh ? `${refreshInterval}s` : 'Tắt auto'}
+      <div className="fixed bottom-2 sm:bottom-4 right-2 sm:right-4 bg-white rounded-lg shadow-lg p-2 sm:p-3 border max-w-[120px] sm:max-w-xs">
+        <div className="flex items-center gap-1 sm:gap-2 text-xs">
+          <div className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full ${autoRefresh ? 'bg-green-500 animate-pulse' : 'bg-gray-400'}`}></div>
+          <span className="text-gray-600 text-xs">
+            {autoRefresh ? `${refreshInterval}s` : 'Tắt'}
           </span>
         </div>
         {activeTab === 'orders' && orders.length > 0 && (
