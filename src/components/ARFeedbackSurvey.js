@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ChevronRight } from 'lucide-react';
+import { API_BASE } from '../constants';
 
 export default function ARFeedbackSurvey() {
     const [showPopup, setShowPopup] = useState(false);
@@ -21,18 +22,73 @@ export default function ARFeedbackSurvey() {
         setShowPopup(true);
     };
 
-    const handleSend = () => {
-        console.log('AR Feedback scores:', scores);
-        setSubmitted(true);
-        setTimeout(() => {
-            setSubmitted(false);
-            setShowPopup(false);
-            setScores({
-                interest: null,
-                purchase: null,
-                recommend: null
+    const handleSend = async () => {
+        try {
+            // Lấy thông tin user từ localStorage
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            
+            // Mapping điểm số sang text
+            const scoreToText = {
+                interest: {
+                    1: 'Rất không hài lòng',
+                    2: 'Không hài lòng', 
+                    3: 'Bình thường',
+                    4: 'Hài lòng',
+                    5: 'Rất hài lòng'
+                },
+                purchase: {
+                    1: 'Rất khó',
+                    2: 'Khó',
+                    3: 'Bình thường', 
+                    4: 'Dễ',
+                    5: 'Rất dễ'
+                },
+                recommend: {
+                    1: 'Chắc chắn không',
+                    2: 'Có thể không',
+                    3: 'Không chắc',
+                    4: 'Có thể có', 
+                    5: 'Chắc chắn có'
+                }
+            };
+
+            const feedbackData = {
+                username: user.name || '(tài khoản khách)',
+                email: user.email || '',
+                question1Answer: scoreToText.interest[scores.interest],
+                question2Answer: scoreToText.purchase[scores.purchase],
+                question3Answer: scoreToText.recommend[scores.recommend]
+            };
+
+            const response = await fetch(`${API_BASE}/ar-feedback`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(feedbackData)
             });
-        }, 2000);
+
+            const data = await response.json();
+            
+            if (data.success) {
+                console.log('AR Feedback saved successfully:', data);
+                setSubmitted(true);
+                setTimeout(() => {
+                    setSubmitted(false);
+                    setShowPopup(false);
+                    setScores({
+                        interest: null,
+                        purchase: null,
+                        recommend: null
+                    });
+                }, 2000);
+            } else {
+                alert('Lỗi khi gửi đánh giá: ' + data.message);
+            }
+        } catch (error) {
+            console.error('Error sending AR feedback:', error);
+            alert('Lỗi kết nối. Vui lòng thử lại!');
+        }
     };
 
     const allQuestionsAnswered = scores.interest !== null && scores.purchase !== null && scores.recommend !== null;

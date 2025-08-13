@@ -150,9 +150,9 @@ export default function Header() {
             {isAdmin && (
               <button
                 onClick={() => navigate('/admin')}
-                className="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700"
+                className="px-4 py-2 bg-honvietGold text-white rounded hover:bg-honvietGold/80"
               >
-                Quản lý đơn hàng
+                Quản lý của Admin
               </button>
             )}
             {user ? (
@@ -371,9 +371,9 @@ export default function Header() {
                   navigate('/admin');
                   setMenuOpen(false);
                 }}
-                className="text-left px-3 py-2 bg-purple-600 text-white rounded hover:bg-purple-700"
+                className="text-left px-3 py-2 bg-honvietGold text-white rounded hover:bg-honvietGold/80"
               >
-                Quản lý đơn hàng
+                Quản lý của Admin
               </button>
             )}
             {user ? (
