@@ -10,6 +10,7 @@ const formatPrice = (price) => price.toLocaleString('vi-VN') + '₫';
 const getVisible = (w) => (w >= 1280 ? 5 : w >= 1024 ? 4 : w >= 768 ? 3 : 2);
 
 export const localAccessories = [
+  // 3 áo phông theo thứ tự Bắc - Trung - Nam
   {
     id: 106,
     image: ['https://res.cloudinary.com/dhhljyybq/image/upload/v1754071161/Copy_of_%C3%81O_MI%E1%BB%80N_B%E1%BA%AEC_g2di6k.png','https://res.cloudinary.com/dhhljyybq/image/upload/v1754071161/Copy_of_%C3%81O_MI%E1%BB%80N_B%E1%BA%AEC_g2di6k.png','https://res.cloudinary.com/dhhljyybq/image/upload/v1754071161/Copy_of_%C3%81O_MI%E1%BB%80N_B%E1%BA%AEC_g2di6k.png'],
@@ -31,46 +32,7 @@ export const localAccessories = [
     price: 199000,
     brand: 'Hồn Việt',
   },
-  {
-    id: 101,
-    image: ['https://res.cloudinary.com/dhhljyybq/image/upload/v1754499066/cbcf3cc0-5786-416e-ab3a-5392c181dac9_fgiyhd.jpg','https://res.cloudinary.com/dhhljyybq/image/upload/v1754499066/6b15f0cc-9f65-42c4-badb-9479edc3309e_blf0zo.jpg'],
-    name: 'Túi Tote',
-    price: 60000,
-    brand: 'Hồn Việt',
-  },
-  {
-    id: 102,
-    image: ['https://res.cloudinary.com/dhhljyybq/image/upload/v1753704385/20dba518-104a-4aaa-9cf8-444416939a14_vgrpau.jpg','https://res.cloudinary.com/dhhljyybq/image/upload/v1753704385/b53fe675-590f-4af1-866d-80a4f2367663_uo0u9f.jpg'],
-    name: 'Cốc sứ',
-    price: 65000,
-    brand: 'Hồn Việt',
-  },
-  {
-    id: 103,
-    image: ['https://res.cloudinary.com/dhhljyybq/image/upload/v1753703658/1_lfdlol.jpg','https://res.cloudinary.com/dhhljyybq/image/upload/v1753703658/e2304062-830a-4b2b-b272-ba4a767f3467_ogyvln.jpg' ],
-    name: 'Mũ lưỡi trai',
-    price: 70000,
-    brand: 'Hồn Việt',
-  },
-  {//oke
-    id: 105,
-    image: ['https://res.cloudinary.com/dhhljyybq/image/upload/v1753117422/STICKER_dyzzii.png', 'https://res.cloudinary.com/dhhljyybq/image/upload/v1753117421/STICKER_2_isogws.png', 'https://res.cloudinary.com/dhhljyybq/image/upload/v1753117422/STICKER_1_swe1jc.png'],
-    name: 'Móc khóa',
-    price: 10000,
-    brand: 'Hồn Việt',
-  },
-  {
-    id: 109,
-    image: ['https://res.cloudinary.com/dhhljyybq/image/upload/v1754583102/1_jqzjzd.jpg',
-      'https://res.cloudinary.com/dhhljyybq/image/upload/v1754583101/68e0f2b9-e1eb-45a8-8a51-c519eec740c9_t8uusw.jpg',
-      'https://res.cloudinary.com/dhhljyybq/image/upload/v1754583101/5aa49ba3-3ecc-46ae-860f-68a35e3ae126_fnjkup.jpg',
-      'https://res.cloudinary.com/dhhljyybq/image/upload/v1754583102/10a07977-02c6-45be-8c29-4cf36ab7cdd2_bgw8hm.jpg',
-      'https://res.cloudinary.com/dhhljyybq/image/upload/v1754583103/5341412b-63e7-4c35-a334-07a07981ff11_zbtxnv.jpg'
-    ],
-    name: 'Sticker',
-    price: 15000,
-    brand: 'Hồn Việt',
-  },
+  // Đĩa gốm
   {
     id: 110,
     image: ['https://res.cloudinary.com/dhhljyybq/image/upload/v1754583084/804ff630-9e5f-4a4e-b631-e03d833a941a_bmgjpd.jpg',
@@ -84,6 +46,52 @@ export const localAccessories = [
     price: 179000,
     brand: 'Hồn Việt',
   },
+  // Sticker
+  {
+    id: 109,
+    image: ['https://res.cloudinary.com/dhhljyybq/image/upload/v1754583102/1_jqzjzd.jpg',
+      'https://res.cloudinary.com/dhhljyybq/image/upload/v1754583101/68e0f2b9-e1eb-45a8-8a51-c519eec740c9_t8uusw.jpg',
+      'https://res.cloudinary.com/dhhljyybq/image/upload/v1754583101/5aa49ba3-3ecc-46ae-860f-68a35e3ae126_fnjkup.jpg',
+      'https://res.cloudinary.com/dhhljyybq/image/upload/v1754583102/10a07977-02c6-45be-8c29-4cf36ab7cdd2_bgw8hm.jpg',
+      'https://res.cloudinary.com/dhhljyybq/image/upload/v1754583103/5341412b-63e7-4c35-a334-07a07981ff11_zbtxnv.jpg'
+    ],
+    name: 'Sticker',
+    price: 15000,
+    brand: 'Hồn Việt',
+  },
+  // Cốc sứ
+  {
+    id: 102,
+    image: ['https://res.cloudinary.com/dhhljyybq/image/upload/v1753704385/20dba518-104a-4aaa-9cf8-444416939a14_vgrpau.jpg','https://res.cloudinary.com/dhhljyybq/image/upload/v1753704385/b53fe675-590f-4af1-866d-80a4f2367663_uo0u9f.jpg'],
+    name: 'Cốc sứ',
+    price: 75000,
+    brand: 'Hồn Việt',
+  },
+  // Túi Tote
+  {
+    id: 101,
+    image: ['https://res.cloudinary.com/dhhljyybq/image/upload/v1754499066/cbcf3cc0-5786-416e-ab3a-5392c181dac9_fgiyhd.jpg','https://res.cloudinary.com/dhhljyybq/image/upload/v1754499066/6b15f0cc-9f65-42c4-badb-9479edc3309e_blf0zo.jpg'],
+    name: 'Túi Tote',
+    price: 60000,
+    brand: 'Hồn Việt',
+  },
+  // Mũ lưỡi trai
+  {
+    id: 103,
+    image: ['https://res.cloudinary.com/dhhljyybq/image/upload/v1753703658/1_lfdlol.jpg','https://res.cloudinary.com/dhhljyybq/image/upload/v1753703658/e2304062-830a-4b2b-b272-ba4a767f3467_ogyvln.jpg' ],
+    name: 'Mũ lưỡi trai',
+    price: 70000,
+    brand: 'Hồn Việt',
+  },
+  // Móc khóa
+  {
+    id: 105,
+    image: ['https://res.cloudinary.com/dhhljyybq/image/upload/v1753117422/STICKER_dyzzii.png', 'https://res.cloudinary.com/dhhljyybq/image/upload/v1753117421/STICKER_2_isogws.png', 'https://res.cloudinary.com/dhhljyybq/image/upload/v1753117422/STICKER_1_swe1jc.png'],
+    name: 'Móc khóa',
+    price: 10000,
+    brand: 'Hồn Việt',
+  },
+  
 ];
 
 export default function AccessoriesSection() {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 
-const introText = `Công ty Hồn Việt được khởi xướng bởi một nhóm bạn trẻ đầy đam mê với sứ mệnh bảo tồn và phát huy giá trị văn hóa truyền thống của ba miền Bắc – Trung – Nam Việt Nam.\n\nNhư cố Tổng Bí thư Nguyễn Phú Trọng từng khẳng định:\n\n“Văn hóa là hồn cốt của dân tộc, nói lên bản sắc của dân tộc. Văn hóa còn thì dân tộc còn. Do đó, nếu mất văn hóa là mất dân tộc.”\n\nLời nói này chính là kim chỉ nam cho mọi hoạt động của Hồn Việt, giúp chúng tôi kiên định trên con đường giữ gìn và phát huy những giá trị văn hóa truyền thống quý báu của dân tộc Việt.`;
+const introText = `Công ty TNHH Hồn Việt được khởi xướng bởi một nhóm bạn trẻ đầy đam mê với sứ mệnh bảo tồn và phát huy giá trị văn hóa truyền thống của ba miền Bắc – Trung – Nam Việt Nam.\n\nNhư cố Tổng Bí thư Nguyễn Phú Trọng từng khẳng định:\n\n“Văn hóa là hồn cốt của dân tộc, nói lên bản sắc của dân tộc. Văn hóa còn thì dân tộc còn. Do đó, nếu mất văn hóa là mất dân tộc.”\n\nLời nói này chính là kim chỉ nam cho mọi hoạt động của Hồn Việt, giúp chúng tôi kiên định trên con đường giữ gìn và phát huy những giá trị văn hóa truyền thống quý báu của dân tộc Việt.`;
 
 const sections = [
     {
@@ -64,7 +64,7 @@ export default function CompanyIntro() {
 
     return (
         <section ref={sectionRef} className="max-w-5xl mx-auto px-4 py-10">
-            <h2 className="text-2xl md:text-3xl font-bold text-left mb-6 uppercase text-honvietGold">Công ty Hồn Việt</h2>
+            <h2 className="text-2xl md:text-3xl font-bold text-left mb-6 uppercase text-honvietGold">Công ty TNHH Hồn Việt</h2>
             <p className="text-base md:text-lg text-gray-700 whitespace-pre-line text-left mb-10 italic">{introText}</p>
             <div className="flex flex-col md:flex-row gap-6">
                 {sections.map((sec, idx) => (
