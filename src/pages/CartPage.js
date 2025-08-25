@@ -258,9 +258,9 @@ export default function CartPage() {
                                             </div>
                                             <div style="margin-top:16px;">
                                                 <p style="margin:4px 0;"><strong>Thành tiền:</strong> ${total.toLocaleString()}₫</p>
-                                                <p style="margin:4px 0;"><strong>Phí ship:</strong> 30,000₫</p>
+                                                <p style="margin:4px 0;"><strong>Phí ship:</strong> 0₫</p>
                                                 <p style="margin:4px 0;"><strong>Discount:</strong> -0₫</p>
-                                                <h3 style="color:#b91c1c; margin:8px 0 0 0;">TỔNG: ${(total + 30000).toLocaleString()}₫</h3>
+                                                <h3 style="color:#b91c1c; margin:8px 0 0 0;">TỔNG: ${(total + 0).toLocaleString()}₫</h3>
                                             </div>
                                             <p style="margin-top: 24px; color:#b91c1c; font-weight:bold; font-size:1.1rem; text-align:center;">Cảm ơn bạn đã mua hàng tại Hồn Việt!</p>
                                             <style>
@@ -300,9 +300,9 @@ export default function CartPage() {
                                                     image: item.image
                                                 })),
                                                 subtotal: total,
-                                                shippingFee: 30000,
+                                                shippingFee: 0,
                                                 discount: 0,
-                                                total: total + 30000
+                                                total: total + 0
                                             };
 
                                             const response = await fetch(`${API_BASE}/orders`, {
